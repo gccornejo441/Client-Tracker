@@ -245,15 +245,15 @@ export default function HomePage() {
 
       <main>
         <section className='bg-white'>
-          <div className='layout flex min-h-screen flex-col items-center justify-center border-2 border-blue-500 text-center'>
+          <div className='layout flex min-h-screen flex-col items-center justify-center text-center'>
             <div className='flex w-full'>
-              <div className='w-1/2 border-2 border-black text-left'>
+              <div className='w-1/2 text-left'>
                 <h1>
                   Megan's Daily Planner
                   {/* <IsolateReRender control={control} /> */}
                 </h1>
               </div>
-              <div className='w-1/2 border-2 border-black'>
+              <div className='w-1/2'>
                 <Planner
                   isOpen={isOpen}
                   closeModal={closeModal}

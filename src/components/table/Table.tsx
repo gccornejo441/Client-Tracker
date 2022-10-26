@@ -13,7 +13,7 @@ const TableName = () => {
       {TABLENAME.map((label, index) => (
         <th
           key={index}
-          className='cursor-pointer border-r p-2 text-sm font-thin text-gray-500'
+          className='cursor-pointer border-r py-2 px-10 text-sm text-2xl font-black text-gray-900'
         >
           <div className='flex items-center justify-center'>
             {label}
@@ -48,25 +48,6 @@ const Table = ({ tableData }: IEventProps) => {
           </tr>
         </thead>
         <tbody>
-          <tr className='bg-gray-50 text-center'>
-            <td className='border-r p-2'></td>
-            <td className='border-r p-2'>
-              <input type='text' className='border p-1' />
-            </td>
-            <td className='border-r p-2'>
-              <input type='text' className='border p-1' />
-            </td>
-            <td className='border-r p-2'>
-              <input type='text' className='border p-1' />
-            </td>
-            <td className='border-r p-2'>
-              <input type='text' className='border p-1' />
-            </td>
-            <td className='p-2'>
-              <input type='text' className='border p-1' />
-            </td>
-          </tr>
-
           {tableData.map((event, index) => (
             <tr
               key={index}
