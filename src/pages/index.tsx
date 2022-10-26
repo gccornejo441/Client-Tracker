@@ -6,6 +6,7 @@ import useSWR from 'swr';
 import Layout from '@/components/layout/Layout';
 import UnderlineLink from '@/components/links/UnderlineLink';
 import Seo from '@/components/Seo';
+import Table from '@/components/table/Table';
 
 import { IEvents } from '../../types';
 
@@ -27,16 +28,26 @@ const EmailForm = () => {
   const onSubmit: SubmitHandler<IEvents> = (data) => {
     // Sets form data into Firestore
 
-    const { eventName, eventMemo } = data;
+    const { eventName, eventMemo, eventStart, eventEnd, eventAction } = data;
 
     fetch('/api/dailyEvents/', {
       method: 'POST',
-      body: JSON.stringify({ eventName, eventMemo }),
+      body: JSON.stringify({
+        eventName,
+        eventMemo,
+        eventStart,
+        eventEnd,
+        eventAction,
+      }),
       headers: {
         'Content-Type': 'application/json',
       },
     });
   };
+
+  const today = new Date();
+  const time =
+    today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -68,6 +79,53 @@ const EmailForm = () => {
             id='eventMemo'
             {...register('eventMemo')}
             placeholder='Remember to bring a six pack of IPAs.'
+          />
+        </div>
+        <div className='mb-4'>
+          <label
+            className='mb-2 block text-sm font-bold text-gray-700'
+            htmlFor='eventStart'
+          >
+            Event Start
+          </label>
+          <input
+            className='focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
+            id='eventStart'
+            {...register('eventStart')}
+            placeholder={time}
+            type='text'
+            value={time}
+          />
+        </div>
+        <div className='mb-4'>
+          <label
+            className='mb-2 block text-sm font-bold text-gray-700'
+            htmlFor='eventEnd'
+          >
+            Event End
+          </label>
+          <input
+            className='focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
+            id='eventEnd'
+            {...register('eventEnd')}
+            placeholder="Remember to end your event or don't!"
+            type='text'
+            value='TBD'
+          />
+        </div>
+        <div className='mb-4'>
+          <label
+            className='mb-2 block text-sm font-bold text-gray-700'
+            htmlFor='eventAction'
+          >
+            Event Action
+          </label>
+          <input
+            className='focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
+            id='eventAction'
+            {...register('eventAction')}
+            type='text'
+            placeholder='Add an action'
           />
         </div>
       </div>
@@ -191,7 +249,7 @@ export default function HomePage() {
             <div className='flex w-full'>
               <div className='w-1/2 border-2 border-black text-left'>
                 <h1>
-                  Daily Planner
+                  Megan's Daily Planner
                   {/* <IsolateReRender control={control} /> */}
                 </h1>
               </div>
@@ -201,16 +259,11 @@ export default function HomePage() {
                   closeModal={closeModal}
                   openModal={openModal}
                 />
-
-                <div>
-                  {data.eventData.map((event: IEvents) => (
-                    <>
-                      <div>{event.eventName}</div>
-                      <div>{event.eventMemo}</div>
-                    </>
-                  ))}
-                </div>
               </div>
+            </div>
+
+            <div>
+              <Table tableData={data.eventData} />
             </div>
 
             <footer className='absolute bottom-2 text-gray-700'>

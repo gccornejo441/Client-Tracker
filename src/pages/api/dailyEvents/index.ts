@@ -8,26 +8,25 @@ export default async function userHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { eventName, eventMemo } = req.body;
+  const { eventName, eventMemo, eventStart, eventEnd, eventAction } = req.body;
 
   const dateApi = Date.now();
 
   if (req.method === 'POST') {
     // POST document to Firestore.
     // Giftwrap Collection from Firestore
-    const eventsCol = createCollection<IEvents>(eventName);
+    const eventsCol = createCollection<IEvents>('Daily Events');
 
     // Get Giftwrap documents from Firestore
     const eventsDocs = doc(eventsCol, `${dateApi}`);
-    await setDoc(eventsDocs, {
-      eventName: eventName,
-      eventMemo: eventMemo,
-    });
 
     // POST document to Firestore.
     await setDoc(eventsDocs, {
       eventName: eventName,
       eventMemo: eventMemo,
+      eventStart: eventStart,
+      eventEnd: eventEnd,
+      eventAction: eventAction,
     });
 
     try {
