@@ -8,7 +8,7 @@ import UnderlineLink from '@/components/links/UnderlineLink';
 import Seo from '@/components/Seo';
 import Table from '@/components/table/Table';
 
-import { IEvents } from '../../types';
+import { IClose, IEvents } from '../../types';
 
 /**
  * SVGR Support
@@ -22,7 +22,7 @@ import { IEvents } from '../../types';
 // Before you begin editing, follow all comments with `STARTERCONF`,
 // to customize the default configuration.
 
-const EmailForm = () => {
+const EmailForm = ({ closeModal }: IClose) => {
   const { register, handleSubmit } = useForm<IEvents>();
 
   const onSubmit: SubmitHandler<IEvents> = (data) => {
@@ -31,7 +31,6 @@ const EmailForm = () => {
     const { eventName, eventMemo, eventStart, eventEnd, eventAction } = data;
 
     fetch('/api/dailyEvents/', {
-      method: 'POST',
       body: JSON.stringify({
         eventName,
         eventMemo,
@@ -39,6 +38,7 @@ const EmailForm = () => {
         eventEnd,
         eventAction,
       }),
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -110,7 +110,6 @@ const EmailForm = () => {
             {...register('eventEnd')}
             placeholder="Remember to end your event or don't!"
             type='text'
-            value='TBD'
           />
         </div>
         <div className='mb-4'>
@@ -133,6 +132,7 @@ const EmailForm = () => {
       <input
         className='inline-flex cursor-pointer justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'
         type='submit'
+        onClick={closeModal}
       />
     </form>
   );
@@ -200,7 +200,7 @@ const Planner = ({ isOpen, closeModal, openModal }: IPlannerProps) => {
                     Planner
                   </Dialog.Title>
 
-                  <EmailForm />
+                  <EmailForm closeModal={closeModal} />
                   <div className='mt-4 flex justify-between'>
                     <button
                       type='button'

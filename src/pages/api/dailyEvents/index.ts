@@ -22,6 +22,7 @@ export default async function userHandler(
 
     // POST document to Firestore.
     await setDoc(eventsDocs, {
+      _id: dateApi,
       eventName: eventName,
       eventMemo: eventMemo,
       eventStart: eventStart,

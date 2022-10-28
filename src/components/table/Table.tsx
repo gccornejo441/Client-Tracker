@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { IEventProps } from '../../../types';
+import { IEventProps, IEvents } from '../../../types';
 
 const TABLENAME = ['Event Name', 'Memo', 'Event Start', 'Event End', 'Action'];
 
@@ -13,7 +13,7 @@ const TableName = () => {
       {TABLENAME.map((label, index) => (
         <th
           key={index}
-          className='cursor-pointer border-r py-2 px-10 text-sm text-2xl font-black text-gray-900'
+          className='cursor-pointer border-r py-2 px-10 text-sm font-black text-gray-900 md:text-2xl'
         >
           <div className='flex items-center justify-center'>
             {label}
@@ -38,7 +38,13 @@ const TableName = () => {
   );
 };
 
-const Table = ({ tableData }: IEventProps) => {
+const Table = (tableData: IEventProps) => {
+  const [list] = React.useState<IEventProps>(tableData);
+
+  // const handleRemove = (id: number) => {
+  //   const eventId = String(id);
+  // };
+
   return (
     <div className='table w-full p-2'>
       <table className='w-full border'>
@@ -48,9 +54,9 @@ const Table = ({ tableData }: IEventProps) => {
           </tr>
         </thead>
         <tbody>
-          {tableData.map((event, index) => (
+          {list.tableData.map((event: IEvents) => (
             <tr
-              key={index}
+              key={event._id}
               className='border-b bg-gray-100 text-center text-sm text-gray-600'
             >
               <td className='border-r p-2'>
@@ -61,6 +67,7 @@ const Table = ({ tableData }: IEventProps) => {
               <td className='border-r p-2'>{event.eventStart}</td>
               <td className='border-r p-2'>{event.eventEnd}</td>
               <td className='border-r p-2'>{event.eventAction}</td>
+              <td className='border-r p-2'>{String(event._id)}</td>
               <td>
                 <a
                   href='#'
@@ -71,6 +78,7 @@ const Table = ({ tableData }: IEventProps) => {
                 <a
                   href='#'
                   className='bg-red-500 p-2 text-xs font-thin text-white hover:shadow-lg'
+                  // onClick={() => handleRemove(event._id)}
                 >
                   Remove
                 </a>

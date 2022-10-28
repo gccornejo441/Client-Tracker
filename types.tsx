@@ -1,4 +1,5 @@
 export interface IEvents {
+  _id: number;
   eventName: string;
   eventMemo: string;
   eventStart: string;
@@ -10,4 +11,8 @@ export interface IEvents {
 
 export interface IEventProps {
   tableData: IEvents[];
+}
+
+export interface IClose {
+  closeModal(): void;
 }
