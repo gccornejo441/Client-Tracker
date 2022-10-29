@@ -222,9 +222,11 @@ const Planner = ({ isOpen, closeModal, openModal }: IPlannerProps) => {
 
 export default function HomePage() {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
-  const { data, error } = useSWR(
-    '/api/dailyEvents/House Party',
-    (apiURL: string) => fetch(apiURL).then((res) => res.json())
+  const { data, error } = useSWR(`/api/dailyEvents/`, (apiURL: string) =>
+    fetch(apiURL, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    }).then((res) => res.json())
   );
 
   if (error) return <div>Failed to load</div>;

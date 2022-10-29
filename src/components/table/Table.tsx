@@ -1,4 +1,8 @@
+import { deleteDoc, doc } from 'firebase/firestore';
+import Router from 'next/router';
 import * as React from 'react';
+
+import { database } from '@/lib/firebaseConfig';
 
 import { IEventProps, IEvents } from '../../../types';
 
@@ -41,9 +45,12 @@ const TableName = () => {
 const Table = (tableData: IEventProps) => {
   const [list] = React.useState<IEventProps>(tableData);
 
-  // const handleRemove = (id: number) => {
-  //   const eventId = String(id);
-  // };
+  const handleRemove = async (id: number) => {
+    const eventId = String(id);
+    const eventRef = doc(database, 'Daily Events', eventId);
+    await deleteDoc(eventRef);
+    Router.reload();
+  };
 
   return (
     <div className='table w-full p-2'>
@@ -78,7 +85,7 @@ const Table = (tableData: IEventProps) => {
                 <a
                   href='#'
                   className='bg-red-500 p-2 text-xs font-thin text-white hover:shadow-lg'
-                  // onClick={() => handleRemove(event._id)}
+                  onClick={() => handleRemove(event._id)}
                 >
                   Remove
                 </a>
