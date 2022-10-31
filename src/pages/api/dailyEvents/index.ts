@@ -1,19 +1,18 @@
-import { doc, getDocs, setDoc } from 'firebase/firestore';
+import { getDocs } from '@firebase/firestore';
+import { deleteDoc, doc, setDoc } from 'firebase/firestore';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { IEvents } from 'types';
 
-import { createCollection } from '../../../lib/firebaseConfig';
+import { createCollection, database } from '../../../lib/firebaseConfig';
 
 export default async function userHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const { eventName, eventMemo, eventStart, eventEnd, eventAction } = req.body;
-  const { method } = req;
-
   const dateApi = Date.now();
 
-  if (method === 'POST') {
+  if (req.method === 'POST') {
     // POST document to Firestore.
     // Giftwrap Collection from Firestore
     const eventsCol = createCollection<IEvents>('Daily Events');
@@ -36,7 +35,13 @@ export default async function userHandler(
     } catch (err) {
       res.status(500).send({ error: 'failed fetch' });
     }
-  } else if (method == 'GET') {
+  } else if (req.method === 'PUT') {
+    const eventRef = doc(database, 'Daily Events', `${req.body}`);
+
+    await deleteDoc(eventRef);
+
+    res.status(201).json({ removedId: req.body });
+  } else if (req.method == 'GET') {
     const eventsCol = createCollection<IEvents>('Daily Events');
     const getEventsDocs = await getDocs(eventsCol);
 
@@ -55,6 +60,6 @@ export default async function userHandler(
     res.status(200).json({ eventData: getEventData() });
   } else {
     res.setHeader('Allow', ['POST']);
-    res.status(405).end(`Method ${method} Not Allowed`);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
