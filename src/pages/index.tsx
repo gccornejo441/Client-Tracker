@@ -1,4 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react';
+import { useRouter } from 'next/router';
 import * as React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import useSWR from 'swr';
@@ -24,6 +25,7 @@ import { IClose, IEvents } from '../../types';
 
 const EmailForm = ({ closeModal }: IClose) => {
   const { register, handleSubmit } = useForm<IEvents>();
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<IEvents> = (data) => {
     // Sets form data into Firestore
@@ -43,6 +45,8 @@ const EmailForm = ({ closeModal }: IClose) => {
         'Content-Type': 'application/json',
       },
     });
+
+    router.reload();
   };
 
   const today = new Date();
@@ -229,8 +233,8 @@ export default function HomePage() {
     }).then((res) => res.json())
   );
 
-  if (error) return <div>Failed to load</div>;
-  if (!data) return <div>Loading...</div>;
+  if (error) return <div>failed to load</div>;
+  if (!data) return <div>loading...</div>;
 
   function closeModal() {
     setIsOpen(false);
@@ -246,7 +250,7 @@ export default function HomePage() {
       <Seo />
 
       <main>
-        <section className='bg-white'>
+        <section className='bg-gray-100'>
           <div className='layout flex min-h-screen flex-col items-center justify-center text-center'>
             <div className='flex w-full'>
               <div className='w-1/2 text-left'>
@@ -265,7 +269,7 @@ export default function HomePage() {
             </div>
 
             <div>
-              <Table tableData={data.eventData} />
+              <Table tableData={data} />
             </div>
 
             <footer className='absolute bottom-2 text-gray-700'>
