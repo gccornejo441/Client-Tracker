@@ -219,7 +219,7 @@ const Table = (props: IEventProps) => {
                         ></path>
                       </svg>
                       <p className='ml-2 text-sm leading-none text-gray-600'>
-                        {event.eventStart}
+                        {event.eventStart.toString()}
                       </p>
                     </div>
                   </td>
@@ -354,7 +354,7 @@ const Table = (props: IEventProps) => {
                                   <button
                                     className={`${
                                       active
-                                        ? 'bg-violet-500 text-white'
+                                        ? 'bg-indigo-500 text-white'
                                         : 'text-gray-900'
                                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                                   >
@@ -378,7 +378,7 @@ const Table = (props: IEventProps) => {
                                   <button
                                     className={`${
                                       active
-                                        ? 'bg-violet-500 text-white'
+                                        ? 'bg-indigo-500 text-white'
                                         : 'text-gray-900'
                                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                                   >
@@ -404,7 +404,7 @@ const Table = (props: IEventProps) => {
                                   <button
                                     className={`${
                                       active
-                                        ? 'bg-violet-500 text-white'
+                                        ? 'bg-indigo-500 text-white'
                                         : 'text-gray-900'
                                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                                   >
@@ -428,7 +428,7 @@ const Table = (props: IEventProps) => {
                                   <button
                                     className={`${
                                       active
-                                        ? 'bg-violet-500 text-white'
+                                        ? 'bg-indigo-500 text-white'
                                         : 'text-gray-900'
                                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                                   >
@@ -455,18 +455,18 @@ const Table = (props: IEventProps) => {
                                     onClick={() => handleRemove(event._id)}
                                     className={`${
                                       active
-                                        ? 'bg-violet-500 text-white'
+                                        ? 'bg-indigo-500 text-white'
                                         : 'text-gray-900'
                                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                                   >
                                     {active ? (
                                       <DropDownIcon.DeleteActiveIcon
-                                        className='mr-2 h-5 w-5 text-violet-400'
+                                        className='mr-2 h-5 w-5 text-indigo-400'
                                         aria-hidden='true'
                                       />
                                     ) : (
                                       <DropDownIcon.DeleteInactiveIcon
-                                        className='mr-2 h-5 w-5 text-violet-400'
+                                        className='mr-2 h-5 w-5 text-indigo-400'
                                         aria-hidden='true'
                                       />
                                     )}
@@ -479,24 +479,6 @@ const Table = (props: IEventProps) => {
                         </Transition>
                       </Menu>
                     </div>
-
-                    {/* <div className="relative px-5 pt-2">
-                  <button className="focus:ring-2 rounded-md focus:outline-none" role="button" aria-label="option">
-                    <svg className="dropbtn" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                      <path d="M4.16667 10.8332C4.62691 10.8332 5 10.4601 5 9.99984C5 9.5396 4.62691 9.1665 4.16667 9.1665C3.70643 9.1665 3.33334 9.5396 3.33334 9.99984C3.33334 10.4601 3.70643 10.8332 4.16667 10.8332Z" stroke="#9CA3AF" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
-                      <path d="M10 10.8332C10.4602 10.8332 10.8333 10.4601 10.8333 9.99984C10.8333 9.5396 10.4602 9.1665 10 9.1665C9.53976 9.1665 9.16666 9.5396 9.16666 9.99984C9.16666 10.4601 9.53976 10.8332 10 10.8332Z" stroke="#9CA3AF" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
-                      <path d="M15.8333 10.8332C16.2936 10.8332 16.6667 10.4601 16.6667 9.99984C16.6667 9.5396 16.2936 9.1665 15.8333 9.1665C15.3731 9.1665 15 9.5396 15 9.99984C15 10.4601 15.3731 10.8332 15.8333 10.8332Z" stroke="#9CA3AF" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </svg>
-                  </button>
-                  <div className="dropdown-content bg-white shadow w-24 absolute z-30 right-0 mr-6 hidden">
-                    <div tabIndex={0} className="focus:outline-none focus:text-indigo-600 text-xs w-full hover:bg-indigo-700 py-4 px-4 cursor-pointer hover:text-white">
-                      <p>Edit</p>
-                    </div>
-                    <div tabIndex={0} className="focus:outline-none focus:text-indigo-600 text-xs w-full hover:bg-indigo-700 py-4 px-4 cursor-pointer hover:text-white">
-                      <p>Delete</p>
-                    </div>
-                  </div>
-                </div> */}
                   </td>
                 </tr>
               ))}

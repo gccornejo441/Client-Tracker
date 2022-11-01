@@ -37,12 +37,6 @@ export default function HomePage() {
       <main>
         <section className='bg-gray-100'>
           <div className='layout flex min-h-screen flex-col items-center justify-center text-center'>
-            <div className='flex w-full'>
-              <div className='w-1/2 text-left'>
-                <h1>Megan's Daily Planner</h1>
-              </div>
-            </div>
-
             <div>
               <Table eventValues={data} />
             </div>

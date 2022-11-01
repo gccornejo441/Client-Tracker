@@ -1,11 +1,14 @@
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import ReactDatePicker from 'react-datepicker';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+
+import 'react-datepicker/dist/react-datepicker.css';
 
 import { IClose, IEvents } from '../../../types';
 
 export const EmailForm = ({ closeModal }: IClose) => {
-  const { register, handleSubmit } = useForm<IEvents>();
+  const { register, handleSubmit, control } = useForm<IEvents>();
   const router = useRouter();
 
   const onSubmit: SubmitHandler<IEvents> = (data) => {
@@ -29,10 +32,6 @@ export const EmailForm = ({ closeModal }: IClose) => {
 
     router.reload();
   };
-
-  const today = new Date();
-  const time =
-    today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -73,13 +72,16 @@ export const EmailForm = ({ closeModal }: IClose) => {
           >
             Event Start
           </label>
-          <input
-            className='focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
-            id='eventStart'
-            {...register('eventStart')}
-            placeholder={time}
-            type='text'
-            value={time}
+          <Controller
+            control={control}
+            name='eventStart'
+            render={({ field: { onChange, onBlur, value } }) => (
+              <ReactDatePicker
+                onChange={onChange}
+                onBlur={onBlur}
+                selected={value}
+              />
+            )}
           />
         </div>
         <div className='mb-4'>
@@ -89,12 +91,16 @@ export const EmailForm = ({ closeModal }: IClose) => {
           >
             Event End
           </label>
-          <input
-            className='focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
-            id='eventEnd'
-            {...register('eventEnd')}
-            placeholder="Remember to end your event or don't!"
-            type='text'
+          <Controller
+            control={control}
+            name='eventStart'
+            render={({ field: { onChange, onBlur, value } }) => (
+              <ReactDatePicker
+                onChange={onChange}
+                onBlur={onBlur}
+                selected={value}
+              />
+            )}
           />
         </div>
         <div className='mb-4'>

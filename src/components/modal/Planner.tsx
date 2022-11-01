@@ -11,9 +11,11 @@ export const Planner = ({ isOpen, closeModal, openModal }: IPlannerProps) => {
         <button
           type='button'
           onClick={openModal}
-          className='font-semi rounded border-b-4 border-blue-700 bg-blue-500 py-2 px-4 text-white hover:border-blue-500 hover:bg-blue-400'
+          className='mt-4 inline-flex items-start justify-start rounded bg-indigo-700 px-6 py-3 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 sm:mt-0'
         >
-          Plan an event
+          <p className='text-sm font-medium leading-none text-white'>
+            Add An Event
+          </p>
         </button>
       </div>
 
