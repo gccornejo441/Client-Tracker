@@ -49,15 +49,12 @@ export default async function userHandler(
     const eventValues: IEvents[] = [];
 
     // Get Google map data.
-    const getEventData = () => {
-      getEventsDocs.docs.forEach((eventDoc) => {
-        const event = eventDoc.data();
-        eventValues.push(event);
-      });
-      return eventValues;
-    };
+    getEventsDocs.docs.forEach((eventDoc) => {
+      const event = eventDoc.data();
+      eventValues.push(event);
+    });
 
-    res.status(200).json({ eventData: getEventData() });
+    res.status(200).json(eventValues);
   } else {
     res.setHeader('Allow', ['POST']);
     res.status(405).end(`Method ${req.method} Not Allowed`);
