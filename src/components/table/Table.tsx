@@ -7,6 +7,15 @@ import * as DropDownIcon from '@/components/table/dropDown';
 
 import { IEventProps, IEvents } from '../../../types';
 
+const TABLELABELS = [
+  'Status',
+  'Name',
+  'Description',
+  'Start Date & Time',
+  'End Date & Time',
+  'Due',
+];
+
 const Table = (props: IEventProps) => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
@@ -38,6 +47,12 @@ const Table = (props: IEventProps) => {
   return (
     <div className='w-[100vw] sm:px-6'>
       <div className='bg-white py-4 px-4 md:py-7 md:px-8 xl:px-10'>
+        <div className='pb-10 text-left'>
+          <input
+            type='text'
+            className='border-0 text-5xl font-bold text-indigo-800 outline-none outline-offset-0'
+          />
+        </div>
         <div className='items-center justify-between sm:flex'>
           <div className='flex items-center'>
             <a
@@ -73,6 +88,29 @@ const Table = (props: IEventProps) => {
         </div>
         <div className='mt-7'>
           <table className='w-full whitespace-nowrap'>
+            <thead className='text-xs '>
+              <tr>
+                <th scope='col' className='p-4'>
+                  <td>
+                    <div className='flex'>
+                      <input
+                        id='checkbox-all-search'
+                        type='checkbox'
+                        className='h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600'
+                      />
+                      <label htmlFor='checkbox-all-search' className='sr-only'>
+                        checkbox
+                      </label>
+                    </div>
+                  </td>
+                </th>
+                {TABLELABELS.map((label, index) => (
+                  <th key={index} scope='col' className='px-6 pl-5'>
+                    <td>{label}</td>
+                  </th>
+                ))}
+              </tr>
+            </thead>
             <tbody>
               {props.eventValues.map((event: IEvents) => (
                 <tr
@@ -135,7 +173,7 @@ const Table = (props: IEventProps) => {
                       </svg>
                     </div>
                   </td>
-                  <td className='pl-24'>
+                  <td className='pl-5'>
                     <div className='flex items-center'>
                       <svg
                         xmlns='http://www.w3.org/2000/svg'
@@ -293,7 +331,7 @@ const Table = (props: IEventProps) => {
                       Due today at 18:00
                     </button>
                   </td>
-                  <td className='pl-4'>
+                  <td className='pl-5'>
                     <button className='rounded bg-gray-100 py-3 px-5 text-sm leading-none text-gray-600 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-red-300 focus:ring-offset-2'>
                       View
                     </button>

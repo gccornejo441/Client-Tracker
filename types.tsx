@@ -10,7 +10,6 @@ export interface IEvents {
   eventName: string;
   eventMemo: string;
   eventStart: Date;
-  Selected: string;
   eventEnd: string;
   eventAction: string;
 }
