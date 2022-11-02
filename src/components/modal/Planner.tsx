@@ -2,7 +2,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import * as React from 'react';
 import { IPlannerProps } from 'types';
 
-import { EmailForm } from '@/components/Forms.tsx/PlannerForm';
+import { EmailForm } from '@/components/Forms/PlannerForm';
 
 export const Planner = ({ isOpen, closeModal, openModal }: IPlannerProps) => {
   return (
