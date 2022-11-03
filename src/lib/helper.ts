@@ -39,3 +39,7 @@ export function getFromSessionStorage(key: string): string | null {
   }
   return null;
 }
+
+export function classNames(...classes: string[]): string {
+  return classes.filter(Boolean).join(' ');
+}
