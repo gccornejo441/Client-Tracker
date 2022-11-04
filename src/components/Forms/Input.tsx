@@ -62,7 +62,7 @@ export default function Input({
         {helperText && <p className='text-xs text-gray-500'>{helperText}</p>}
         {errors[id] && (
           <span className='text-sm text-red-500'>
-            {/* {errors[id].message} */}
+            {errors[id]?.message as string}
           </span>
         )}
       </div>

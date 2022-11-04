@@ -88,7 +88,7 @@ export default function DatePicker({
               )}
               {errors[id] && (
                 <span className='text-sm text-red-500'>
-                  {/* {errors[id].message} */}
+                  {errors[id]?.message as string}
                 </span>
               )}
             </div>
