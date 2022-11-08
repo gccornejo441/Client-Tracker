@@ -3,6 +3,8 @@ import * as React from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
 import DatePicker from '@/components/Forms/DatePicker';
+import Input from '@/components/Forms/Input';
+import Textarea from '@/components/Forms/Textarea';
 
 import { IClose, IProject } from '../../../types';
 
@@ -97,17 +99,7 @@ export const EmailForm = ({ closeModal }: IClose) => {
             />
           </div>
           <div className='mb-4'>
-            <label
-              className='mb-2 block text-sm font-bold text-gray-700'
-              htmlFor='toDo'
-            >
-              To Do
-            </label>
-            <textarea
-              className='focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
-              id='toDo'
-              {...register('toDo')}
-            />
+            <Textarea label='To Do' id='toDo' rows={3} />
           </div>
           <div className='mb-4'>
             <DatePicker
@@ -124,88 +116,19 @@ export const EmailForm = ({ closeModal }: IClose) => {
             />
           </div>
           <div className='mb-4'>
-            <label
-              className='mb-2 block text-sm font-bold text-gray-700'
-              htmlFor='clientName'
-            >
-              Client Name
-            </label>
-            <input
-              className='focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
-              id='clientName'
-              {...register('clientName')}
-              type='text'
-            />
+            <Input label='Client Name' id='clientName' />
           </div>
           <div className='mb-4'>
-            <label
-              className='mb-2 block text-sm font-bold text-gray-700'
-              htmlFor='projectName'
-            >
-              Project Name
-            </label>
-            <input
-              className='focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
-              id='projectName'
-              {...register('projectName')}
-              type='text'
-            />
+            <Input label='Project Name' id='projectName' />
           </div>
           <div className='mb-4'>
-            <label
-              className='mb-2 block text-sm font-bold text-gray-700'
-              htmlFor='projectLead'
-            >
-              Project Lead
-            </label>
-            <input
-              className='focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
-              id='projectLead'
-              {...register('projectLead')}
-              type='text'
-            />
+            <Input label='Project Lead' id='projectLead' />
           </div>
           <div className='mb-4'>
-            <label
-              className='mb-2 block text-sm font-bold text-gray-700'
-              htmlFor='hours'
-            >
-              Hours Spent
-            </label>
-            <input
-              className='focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
-              id='hours'
-              {...register('hours')}
-              type='text'
-            />
+            <Input label='Hours Spent' id='hours' />
           </div>
           <div className='mb-4'>
-            <label
-              className='mb-2 block text-sm font-bold text-gray-700'
-              htmlFor='billed'
-            >
-              Billed
-            </label>
-            <input
-              className='focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
-              id='billed'
-              {...register('billed')}
-              type='text'
-            />
-          </div>
-          <div className='mb-4'>
-            <label
-              className='mb-2 block text-sm font-bold text-gray-700'
-              htmlFor='billed'
-            >
-              Billed
-            </label>
-            <input
-              className='focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
-              id='billed'
-              {...register('billed')}
-              type='text'
-            />
+            <Input label='Billed' id='hours' />
           </div>
         </div>
 

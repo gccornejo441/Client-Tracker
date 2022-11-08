@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { RegisterOptions, useFormContext } from 'react-hook-form';
 import { HiExclamationCircle } from 'react-icons/hi';
 
-export type InputProps = {
+export type TextareaProps = {
   label: string;
   id: string;
   placeholder?: string;
@@ -10,18 +10,21 @@ export type InputProps = {
   type?: string;
   readOnly?: boolean;
   validation?: RegisterOptions;
-} & React.ComponentPropsWithoutRef<'input'>;
+  cols?: number;
+  rows?: number;
+} & React.ComponentPropsWithoutRef<'textarea'>;
 
-export default function Input({
+export default function Textarea({
   label,
   placeholder = '',
   helperText,
   id,
-  type = 'text',
   readOnly = false,
   validation,
+  cols,
+  rows,
   ...rest
-}: InputProps) {
+}: TextareaProps) {
   const {
     register,
     formState: { errors },
@@ -36,12 +39,13 @@ export default function Input({
         {label}
       </label>
       <div className='relative mt-1'>
-        <input
+        <textarea
           {...register(id, validation)}
           {...rest}
-          type={type}
           name={id}
           id={id}
+          cols={cols}
+          rows={rows}
           readOnly={readOnly}
           className={clsx(
             readOnly
