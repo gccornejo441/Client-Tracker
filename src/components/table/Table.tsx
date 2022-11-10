@@ -5,6 +5,7 @@ import * as React from 'react';
 import { Planner } from '@/components/modal/Planner';
 import * as DropDownIcon from '@/components/table/dropDown';
 
+import ViewWindow from './viewWindow';
 import { IEventProps, IEvents } from '../../../types';
 
 import MenuButtonSVG from '~/svg/MenuButtonSVG.svg';
@@ -24,6 +25,11 @@ const TABLELABELS = [
 
 const Table = (props: IEventProps) => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const [enabled, setEnabled] = React.useState(false);
+
+  const enableToggle = () => {
+    setEnabled(true);
+  };
 
   function closeModal() {
     setIsOpen(false);
@@ -176,9 +182,7 @@ const Table = (props: IEventProps) => {
                     </button>
                   </td>
                   <td className='pl-5'>
-                    <button className='rounded bg-gray-100 py-3 px-5 text-sm leading-none text-gray-600 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-red-300 focus:ring-offset-2'>
-                      View
-                    </button>
+                    <ViewWindow enableToggle={enableToggle} enabled={enabled} />
                   </td>
                   <td>
                     <div>

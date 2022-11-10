@@ -38,6 +38,11 @@ export interface IClose {
   closeModal(): void;
 }
 
+export interface ISwitch {
+  enableToggle?: () => void;
+  enabled: boolean;
+}
+
 export interface IPlannerProps {
   isOpen: boolean;
   closeModal(): void;
