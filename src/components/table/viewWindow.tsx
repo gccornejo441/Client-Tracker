@@ -79,11 +79,6 @@ const ViewWindow = ({ enableToggle, enabled }: ISwitch) => {
                         enabled ? 'translate-x-6' : 'translate-x-1'
                       } inline-block h-4 w-4 transform rounded-full bg-white transition`}
                     />
-
-                    <div className='absolute top-20'>
-                      {enabled && 'i am enabled!'}
-                      {!enabled && 'i am not enabled!'}
-                    </div>
                   </Switch>
 
                   <div className='mt-4'>

@@ -28,7 +28,11 @@ const Table = (props: IEventProps) => {
   const [enabled, setEnabled] = React.useState(false);
 
   const enableToggle = () => {
-    setEnabled(true);
+    if (enabled == false) {
+      setEnabled(true);
+    } else {
+      setEnabled(false);
+    }
   };
 
   function closeModal() {
@@ -58,6 +62,11 @@ const Table = (props: IEventProps) => {
 
   return (
     <div className='w-[100vw] sm:px-6'>
+      <div className='absolute top-20'>
+        {enabled && 'i am enabled!'}
+        {!enabled && 'i am not enabled!'}
+      </div>
+
       <div className='bg-white py-4 px-4 md:py-7 md:px-8 xl:px-10'>
         <div className='pb-10 text-left'>
           <input

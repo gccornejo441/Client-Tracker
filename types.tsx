@@ -39,7 +39,7 @@ export interface IClose {
 }
 
 export interface ISwitch {
-  enableToggle?: () => void;
+  enableToggle(checked: boolean): void;
   enabled: boolean;
 }
 
