@@ -1,21 +1,58 @@
 import { getDocs } from '@firebase/firestore';
 import { deleteDoc, doc, setDoc } from 'firebase/firestore';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { IEvents } from 'types';
+import { IProject } from 'types';
 
 import { createCollection, database } from '../../../lib/firebaseConfig';
+
+const getFormatedDate = async (unformatedDate: string) => {
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  const newDate = new Date(unformatedDate);
+
+  const longDate = `${months[newDate.getMonth()]} 
+         ${newDate.getDate()}, 
+         ${newDate.getFullYear()}`;
+
+  return longDate;
+};
 
 export default async function userHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { eventName, eventMemo, eventStart, eventEnd, eventAction } = req.body;
+  const {
+    status,
+    toDo,
+    projectStart,
+    projectDue,
+    clientName,
+    projectName,
+    projectLead,
+    hours,
+    billed,
+  } = req.body;
   const dateApi = Date.now();
 
   if (req.method === 'POST') {
     // POST document to Firestore.
     // Giftwrap Collection from Firestore
-    const eventsCol = createCollection<IEvents>('Daily Events');
+    const eventsCol = createCollection<IProject>('Daily Events');
+
+    const newProjectStart = await getFormatedDate(projectStart);
+    const newProjectDue = await getFormatedDate(projectDue);
 
     // Get Giftwrap documents from Firestore
     const eventsDocs = doc(eventsCol, `${dateApi}`);
@@ -23,15 +60,19 @@ export default async function userHandler(
     // POST document to Firestore.
     await setDoc(eventsDocs, {
       _id: dateApi,
-      eventName: eventName,
-      eventMemo: eventMemo,
-      eventStart: eventStart,
-      eventEnd: eventEnd,
-      eventAction: eventAction,
+      status: status,
+      toDo: toDo,
+      projectStart: newProjectStart,
+      projectDue: newProjectDue,
+      clientName: clientName,
+      projectName: projectName,
+      projectLead: projectLead,
+      hours: hours,
+      billed: billed,
     });
 
     try {
-      res.status(201).json({ eventName, eventMemo });
+      res.status(201).json({ projectName, clientName });
     } catch (err) {
       res.status(500).send({ error: 'failed fetch' });
     }
@@ -42,11 +83,11 @@ export default async function userHandler(
 
     res.status(201).json({ removedId: req.body });
   } else if (req.method == 'GET') {
-    const eventsCol = createCollection<IEvents>('Daily Events');
+    const eventsCol = createCollection<IProject>('Daily Events');
     const getEventsDocs = await getDocs(eventsCol);
 
     // Returns values
-    const eventValues: IEvents[] = [];
+    const eventValues: IProject[] = [];
 
     // Get Google map data.
     getEventsDocs.docs.forEach((eventDoc) => {

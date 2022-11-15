@@ -1,6 +1,6 @@
 import { getDocs } from '@firebase/firestore';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { IEvents } from 'types';
+import { IProject } from 'types';
 
 import { createCollection } from '../../../lib/firebaseConfig';
 
@@ -14,11 +14,11 @@ export default async function userHandler(
   } = req;
 
   if (method == 'GET') {
-    const eventsCol = createCollection<IEvents>('Daily Events');
+    const eventsCol = createCollection<IProject>('Daily Events');
     const getEventsDocs = await getDocs(eventsCol);
 
     // Returns values
-    const eventValues: IEvents[] = [];
+    const eventValues: IProject[] = [];
 
     // Get Google map data.
     const getEventData = () => {

@@ -49,7 +49,6 @@ export const EmailForm = ({ closeModal }: IClose) => {
       projectLead,
       hours,
       billed,
-      notes,
     } = data;
 
     fetch('/api/dailyEvents/', {
@@ -63,7 +62,6 @@ export const EmailForm = ({ closeModal }: IClose) => {
         projectLead,
         hours,
         billed,
-        notes,
       }),
       method: 'POST',
       headers: {
@@ -128,7 +126,7 @@ export const EmailForm = ({ closeModal }: IClose) => {
             <Input label='Hours Spent' id='hours' />
           </div>
           <div className='mb-4'>
-            <Input label='Billed' id='hours' />
+            <Input label='Billed' id='billed' />
           </div>
         </div>
 

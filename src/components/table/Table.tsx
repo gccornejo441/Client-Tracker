@@ -5,8 +5,8 @@ import * as React from 'react';
 import { Planner } from '@/components/modal/Planner';
 import * as DropDownIcon from '@/components/table/dropDown';
 
-import ViewWindow from './viewWindow';
-import { IEventProps, IEvents } from '../../../types';
+import View from '../../components/table/View';
+import { IEventProps, IProject } from '../../../types';
 
 import MenuButtonSVG from '~/svg/MenuButtonSVG.svg';
 
@@ -25,15 +25,6 @@ const TABLELABELS = [
 
 const Table = (props: IEventProps) => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
-  const [enabled, setEnabled] = React.useState(false);
-
-  const enableToggle = () => {
-    if (enabled == false) {
-      setEnabled(true);
-    } else {
-      setEnabled(false);
-    }
-  };
 
   function closeModal() {
     setIsOpen(false);
@@ -62,11 +53,6 @@ const Table = (props: IEventProps) => {
 
   return (
     <div className='w-[100vw] sm:px-6'>
-      <div className='absolute top-20'>
-        {enabled && 'i am enabled!'}
-        {!enabled && 'i am not enabled!'}
-      </div>
-
       <div className='bg-white py-4 px-4 md:py-7 md:px-8 xl:px-10'>
         <div className='pb-10 text-left'>
           <input
@@ -133,7 +119,7 @@ const Table = (props: IEventProps) => {
               </tr>
             </thead>
             <tbody>
-              {props.eventValues.map((event: IEvents) => (
+              {props.eventValues.map((event: IProject) => (
                 <tr
                   key={event._id}
                   tabIndex={0}
@@ -153,45 +139,52 @@ const Table = (props: IEventProps) => {
                   <td>
                     <div className='flex items-center pl-5'>
                       <p className='mr-2 text-base font-medium leading-none text-gray-700'>
-                        {event.eventName}
+                        {event.status}
                       </p>
                     </div>
                   </td>
                   <td className='pl-5'>
                     <div className='flex items-center'>
                       <p className='ml-2 text-sm leading-none text-gray-600'>
-                        Urgent
+                        {event.toDo}
                       </p>
                     </div>
                   </td>
                   <td className='pl-5'>
                     <div className='flex items-center'>
                       <p className='ml-2 text-sm leading-none text-gray-600'>
-                        {event.eventStart.toString()}
+                        {event.projectStart}
                       </p>
                     </div>
                   </td>
                   <td className='pl-5'>
                     <div className='flex items-center'>
                       <p className='ml-2 text-sm leading-none text-gray-600'>
-                        23
+                        {event.projectDue}
                       </p>
                     </div>
                   </td>
                   <td className='pl-5'>
                     <div className='flex items-center'>
                       <p className='ml-2 text-sm leading-none text-gray-600'>
-                        04/07
+                        {event.clientName}
                       </p>
                     </div>
                   </td>
                   <td className='pl-5'>
                     <button className='rounded bg-red-100 py-3 px-3 text-sm leading-none text-red-700 focus:outline-none'>
-                      Due today at 18:00
+                      {event.projectName}
                     </button>
                   </td>
                   <td className='pl-5'>
-                    <ViewWindow enableToggle={enableToggle} enabled={enabled} />
+                    <div className='flex items-center'>
+                      <p className='ml-2 text-sm leading-none text-gray-600'>
+                        {event.projectLead}
+                      </p>
+                    </div>
+                  </td>
+                  <td className='pl-5'>
+                    <View />
                   </td>
                   <td>
                     <div>

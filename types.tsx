@@ -25,22 +25,25 @@ export interface IProject {
   projectLead: string;
   hours: string;
   billed: string;
-  notes: string;
 }
 
 //https://stackoverflow.com/questions/70157050/how-to-pass-an-array-as-a-prop-and-render-in-child-component-in-typescript-react
 
 export interface IEventProps {
-  eventValues: IEvents[];
+  eventValues: IProject[];
 }
 
 export interface IClose {
   closeModal(): void;
 }
 
-export interface ISwitch {
+export interface IToggleState {
   enableToggle(checked: boolean): void;
   enabled: boolean;
+}
+
+export interface ISwitch {
+  switchLabel: string;
 }
 
 export interface IPlannerProps {

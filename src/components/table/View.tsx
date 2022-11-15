@@ -1,10 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Switch } from '@headlessui/react';
-import { Fragment, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 
-import { ISwitch } from '../../../types';
-
-const ViewWindow = ({ enableToggle, enabled }: ISwitch) => {
+const View = () => {
   const [isOpen, setIsOpen] = useState(true);
 
   function closeModal() {
@@ -57,29 +54,14 @@ const ViewWindow = ({ enableToggle, enabled }: ISwitch) => {
                     as='h3'
                     className='text-lg font-medium leading-6 text-gray-900'
                   >
-                    Payment successful
+                    Column Configuration
                   </Dialog.Title>
                   <div className='mt-2'>
                     <p className='text-sm text-gray-500'>
-                      Your payment has been successfully submitted. We’ve sent
-                      you an email with all of the details of your order.
+                      Toggle to activate or deactive column categories.
                     </p>
+                    <br />
                   </div>
-
-                  <Switch
-                    checked={enabled}
-                    onChange={enableToggle}
-                    className={`${
-                      enabled ? 'bg-blue-600' : 'bg-gray-200'
-                    } relative inline-flex h-6 w-11 items-center rounded-full`}
-                  >
-                    <span className='sr-only'>Enable notifications</span>
-                    <span
-                      className={`${
-                        enabled ? 'translate-x-6' : 'translate-x-1'
-                      } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-                    />
-                  </Switch>
 
                   <div className='mt-4'>
                     <button
@@ -100,4 +82,4 @@ const ViewWindow = ({ enableToggle, enabled }: ISwitch) => {
   );
 };
 
-export default ViewWindow;
+export default View;
