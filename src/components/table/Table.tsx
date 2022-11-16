@@ -52,52 +52,29 @@ const Table = (props: IEventProps) => {
   };
 
   return (
-    <div className='w-[100vw] sm:px-6'>
+    <div className='sm:px-6'>
       <div className='bg-white py-4 px-4 md:py-7 md:px-8 xl:px-10'>
-        <div className='pb-10 text-left'>
+        {/* <div className='pb-10 text-left'>
           <input
             type='text'
             className='border-0 text-5xl font-bold text-indigo-800 outline-none outline-offset-0'
           />
-        </div>
-        <div className='items-center justify-between sm:flex'>
-          <div className='flex items-center'>
-            <a
-              className='rounded-full focus:bg-indigo-50 focus:outline-none  focus:ring-2 focus:ring-indigo-800'
-              href=' javascript:void(0)'
-            >
-              <div className='rounded-full bg-indigo-100 py-2 px-8 text-indigo-700'>
-                <p>All</p>
-              </div>
-            </a>
-            <a
-              className='ml-4 rounded-full focus:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-800 sm:ml-8'
-              href='javascript:void(0)'
-            >
-              <div className='rounded-full py-2 px-8 text-gray-600 hover:bg-indigo-100 hover:text-indigo-700 '>
-                <p>Done</p>
-              </div>
-            </a>
-            <a
-              className='ml-4 rounded-full focus:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-800 sm:ml-8'
-              href='javascript:void(0)'
-            >
-              <div className='rounded-full py-2 px-8 text-gray-600 hover:bg-indigo-100 hover:text-indigo-700 '>
-                <p>Pending</p>
-              </div>
-            </a>
-          </div>
+        </div> */}
+        <div className='flex flex-col items-start border-2 border-red-500'>
           <Planner
             isOpen={isOpen}
             closeModal={closeModal}
             openModal={openModal}
           />
         </div>
-        <div className='mt-7'>
-          <table className='w-full whitespace-nowrap'>
-            <thead className='text-xs '>
-              <tr>
-                <th scope='col' className='p-4'>
+        <div className='mt-7 w-[100vw]'>
+          <table className='table-auto'>
+            <thead className='text-xs'>
+              <tr className='sm:mb-0 sm:table-row'>
+                <th
+                  scope='col'
+                  className='flex flex-col p-4 text-left md:inline'
+                >
                   <td>
                     <div className='flex'>
                       <input
@@ -112,7 +89,11 @@ const Table = (props: IEventProps) => {
                   </td>
                 </th>
                 {TABLELABELS.map((label, index) => (
-                  <th key={index} scope='col' className='px-6 pl-5'>
+                  <th
+                    key={index}
+                    scope='col'
+                    className='mx-6 flex flex-col border-2 border-black px-6 pl-5 text-left md:inline'
+                  >
                     <td>{label}</td>
                   </th>
                 ))}
