@@ -17,14 +17,13 @@ export interface IEvents {
 export interface IProject {
   _id: number;
   status: string;
-  toDo: string;
-  projectStart: string;
-  projectDue: string;
-  clientName: string;
-  projectName: string;
-  projectLead: string;
-  hours: string;
+  counselor: string;
+  client: string;
+  counselingDate: string;
+  state: string;
+  clientGrant: string;
   billed: string;
+  notes: string;
 }
 
 //https://stackoverflow.com/questions/70157050/how-to-pass-an-array-as-a-prop-and-render-in-child-component-in-typescript-react

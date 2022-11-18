@@ -41,27 +41,25 @@ export const EmailForm = ({ closeModal }: IClose) => {
 
     const {
       status,
-      toDo,
-      projectStart,
-      projectDue,
-      clientName,
-      projectName,
-      projectLead,
-      hours,
+      client,
+      counselor,
+      counselingDate,
+      state,
+      clientGrant,
       billed,
+      notes,
     } = data;
 
     fetch('/api/dailyEvents/', {
       body: JSON.stringify({
         status,
-        toDo,
-        projectStart,
-        projectDue,
-        clientName,
-        projectName,
-        projectLead,
-        hours,
+        client,
+        counselor,
+        counselingDate,
+        state,
+        clientGrant,
         billed,
+        notes,
       }),
       method: 'POST',
       headers: {
@@ -87,46 +85,79 @@ export const EmailForm = ({ closeModal }: IClose) => {
               className='focus:shadow-outline mb-3 w-full appearance-none rounded py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
               {...register('status')}
               options={[
-                { label: 'New', value: 'new' },
-                { label: 'Open', value: 'open' },
-                { label: 'On Hold', value: 'hold' },
+                { label: 'Not Counseled', value: 'not counseled' },
+                { label: 'Counseled', value: 'counseled' },
+                { label: 'Awaiting Intakes', value: 'awaiting intakes' },
                 { label: 'Closing', value: 'closing' },
-                { label: 'Finalized', value: 'finalized' },
-                { label: 'Cancelled', value: 'cancelled' },
+                { label: 'Closed', value: 'closed' },
+                { label: 'Ongoing', value: 'Ongoing' },
               ]}
             />
           </div>
           <div className='mb-4'>
-            <Textarea label='To Do' id='toDo' rows={3} />
+            <Input label='Client' id='client' />
+          </div>
+          <div>
+            <label
+              className='mb-2 block text-sm font-bold text-gray-700'
+              htmlFor='counselor'
+            >
+              Assigned Counselor
+            </label>
+            <Select
+              className='focus:shadow-outline mb-3 w-full appearance-none rounded py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
+              {...register('counselor')}
+              options={[
+                { label: 'Thomas G', value: 'thomas' },
+                { label: 'Gabe C', value: 'gabe' },
+              ]}
+            />
           </div>
           <div className='mb-4'>
             <DatePicker
-              id='projectStart'
-              label='Date Assigned'
+              id='counselingDate'
+              label='Counseling Session Date'
               placeholder='Select your date assigned'
             />
           </div>
           <div className='mb-4'>
-            <DatePicker
-              id='projectDue'
-              label='Requested Completion'
-              placeholder='Select your completion date'
+            <Input label='State' id='state' />
+          </div>
+          <div>
+            <label
+              className='mb-2 block text-sm font-bold text-gray-700'
+              htmlFor='clientGrant'
+            >
+              Counseling Grant Type
+            </label>
+            <Select
+              className='focus:shadow-outline mb-3 w-full appearance-none rounded py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
+              {...register('clientGrant')}
+              options={[
+                { label: 'NMS', value: 'nms' },
+                { label: 'HSPC', value: 'hspc' },
+                { label: 'NMS & HSPC', value: 'nms-hspc' },
+              ]}
+            />
+          </div>
+          <div>
+            <label
+              className='mb-2 block text-sm font-bold text-gray-700'
+              htmlFor='billed'
+            >
+              Billed
+            </label>
+            <Select
+              className='focus:shadow-outline mb-3 w-full appearance-none rounded py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
+              {...register('billed')}
+              options={[
+                { label: 'yes', value: 'yes' },
+                { label: 'no', value: 'no' },
+              ]}
             />
           </div>
           <div className='mb-4'>
-            <Input label='Client Name' id='clientName' />
-          </div>
-          <div className='mb-4'>
-            <Input label='Project Name' id='projectName' />
-          </div>
-          <div className='mb-4'>
-            <Input label='Project Lead' id='projectLead' />
-          </div>
-          <div className='mb-4'>
-            <Input label='Hours Spent' id='hours' />
-          </div>
-          <div className='mb-4'>
-            <Input label='Billed' id='billed' />
+            <Textarea label='Notes' id='notes' rows={3} />
           </div>
         </div>
 

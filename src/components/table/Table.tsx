@@ -12,13 +12,11 @@ import MenuButtonSVG from '~/svg/MenuButtonSVG.svg';
 
 const TABLELABELS = [
   'Status',
-  'To Do',
-  'Data Assigned',
-  'Requested Competion',
-  'Client Name',
-  'Project Name',
-  'Leads',
-  'Hours Spent',
+  'Assigned Counselor',
+  'Client',
+  'Counseling Session Date',
+  'State',
+  'Client Grant Type',
   'Billed',
   'Notes',
 ];
@@ -54,12 +52,6 @@ const Table = (props: IEventProps) => {
   return (
     <div className='sm:px-6'>
       <div className='bg-white py-4 px-4 md:py-7 md:px-8 xl:px-10'>
-        {/* <div className='pb-10 text-left'>
-          <input
-            type='text'
-            className='border-0 text-5xl font-bold text-indigo-800 outline-none outline-offset-0'
-          />
-        </div> */}
         <div className='flex flex-col items-start'>
           <Planner
             isOpen={isOpen}
@@ -69,7 +61,7 @@ const Table = (props: IEventProps) => {
         </div>
         <div className='mt-7'>
           <table className='w-full whitespace-nowrap'>
-            <tbody className=''>
+            <tbody>
               <tr>
                 {TABLELABELS.map((label, index) => (
                   <td
@@ -88,57 +80,64 @@ const Table = (props: IEventProps) => {
                 >
                   <td
                     className={
-                      event.status == 'open'
-                        ? 'mr-2 bg-green-500 text-base font-medium uppercase leading-none text-white'
-                        : 'mr-2 text-base font-medium uppercase leading-none text-gray-700'
+                      event.status == 'not counseled'
+                        ? 'mr-2 bg-red-500 px-10 text-base font-medium uppercase leading-none text-white'
+                        : 'mr-2 px-10 text-base font-medium uppercase leading-none text-gray-700'
                     }
                   >
-                    <div className='flex items-center pl-5'>
+                    <div className='flex items-center'>
                       <p>{event.status}</p>
                     </div>
                   </td>
-                  <td className='pl-5'>
+                  <td className='mr-2 px-10 text-base font-medium uppercase leading-none text-gray-700'>
                     <div className='flex items-center'>
                       <p className='ml-2 text-sm leading-none text-gray-600'>
-                        {event.toDo}
+                        {event.counselor}
                       </p>
                     </div>
                   </td>
-                  <td className='pl-5'>
+                  <td className='mr-2 px-10 text-base font-medium uppercase leading-none text-gray-700'>
                     <div className='flex items-center'>
                       <p className='ml-2 text-sm leading-none text-gray-600'>
-                        {event.projectStart}
+                        {event.client}
                       </p>
                     </div>
                   </td>
-                  <td className='pl-5'>
+                  <td className='mr-2 px-10 text-base font-medium uppercase leading-none text-gray-700'>
                     <div className='flex items-center'>
                       <p className='ml-2 text-sm leading-none text-gray-600'>
-                        {event.projectDue}
+                        {event.counselingDate}
                       </p>
                     </div>
                   </td>
-                  <td className='pl-5'>
+                  <td className='mr-2 px-10 text-base font-medium uppercase leading-none text-gray-700'>
                     <div className='flex items-center'>
                       <p className='ml-2 text-sm leading-none text-gray-600'>
-                        {event.clientName}
+                        {event.state}
                       </p>
                     </div>
                   </td>
-                  <td className='pl-5'>
+                  <td className='mr-2 px-10 text-base font-medium uppercase leading-none text-gray-700'>
                     <button className='rounded bg-red-100 py-3 px-3 text-sm leading-none text-red-700 focus:outline-none'>
-                      {event.projectName}
+                      {event.clientGrant}
                     </button>
                   </td>
-                  <td className='pl-5'>
+                  <td className='mr-2 px-10 text-base font-medium uppercase leading-none text-gray-700'>
                     <div className='flex items-center'>
                       <p className='ml-2 text-sm leading-none text-gray-600'>
-                        {event.projectLead}
+                        {event.billed}
                       </p>
                     </div>
                   </td>
-                  <td className='pl-5'>
-                    <View />
+                  <td className='mr-2 px-10 text-base font-medium uppercase leading-none text-gray-700'>
+                    <div className='flex items-center'>
+                      <p className='ml-2 text-sm leading-none text-gray-600'>
+                        {event.notes}
+                      </p>
+                    </div>
+                  </td>
+                  <td className='mr-2 px-10 text-base font-medium uppercase leading-none text-gray-700'>
+                    <View>{event.notes}</View>
                   </td>
                   <td>
                     <div>

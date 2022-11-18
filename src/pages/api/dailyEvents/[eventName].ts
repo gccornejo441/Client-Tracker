@@ -14,7 +14,7 @@ export default async function userHandler(
   } = req;
 
   if (method == 'GET') {
-    const eventsCol = createCollection<IProject>('Daily Events');
+    const eventsCol = createCollection<IProject>('Clients');
     const getEventsDocs = await getDocs(eventsCol);
 
     // Returns values

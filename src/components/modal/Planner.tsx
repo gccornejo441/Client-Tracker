@@ -14,7 +14,7 @@ export const Planner = ({ isOpen, closeModal, openModal }: IPlannerProps) => {
           className='mt-4 inline-flex items-start justify-start rounded bg-indigo-700 px-6 py-3 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 sm:mt-0'
         >
           <p className='text-sm font-medium leading-none text-white'>
-            Add A Project
+            Add A Client Note
           </p>
         </button>
       </div>

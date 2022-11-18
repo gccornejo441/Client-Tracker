@@ -42,9 +42,9 @@ export default function HomePage() {
             </div>
 
             <footer className='absolute bottom-2 text-gray-700'>
-              © {new Date().getFullYear()} By{' '}
+              © {new Date().getFullYear()}{' '}
               <UnderlineLink href='https://www.webworksdreams.com/'>
-                Project/Event Planner
+                Client Tracker By WebWorkDreams
               </UnderlineLink>
             </footer>
           </div>

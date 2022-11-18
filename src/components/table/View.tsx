@@ -1,7 +1,11 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment, useState } from 'react';
 
-const View = () => {
+interface AuxProps {
+  children: React.ReactNode;
+}
+
+const View = ({ children }: AuxProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
@@ -51,15 +55,13 @@ const View = () => {
               >
                 <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all'>
                   <Dialog.Title
-                    as='h3'
-                    className='text-lg font-medium leading-6 text-gray-900'
+                    as='h2'
+                    className='text-xl font-medium leading-6 text-gray-900'
                   >
-                    Column Configuration
+                    Counseling Session Notes
                   </Dialog.Title>
                   <div className='mt-2'>
-                    <p className='text-sm text-gray-500'>
-                      Toggle to activate or deactive column categories.
-                    </p>
+                    <p className='text-lg text-gray-500'>{children}</p>
                     <br />
                   </div>
 

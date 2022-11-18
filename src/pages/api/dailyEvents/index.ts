@@ -35,24 +35,22 @@ export default async function userHandler(
 ) {
   const {
     status,
-    toDo,
-    projectStart,
-    projectDue,
-    clientName,
-    projectName,
-    projectLead,
-    hours,
+    client,
+    counselor,
+    counselingDate,
+    state,
+    clientGrant,
     billed,
+    notes,
   } = req.body;
   const dateApi = Date.now();
 
   if (req.method === 'POST') {
     // POST document to Firestore.
     // Giftwrap Collection from Firestore
-    const eventsCol = createCollection<IProject>('Daily Events');
+    const eventsCol = createCollection<IProject>('Clients');
 
-    const newProjectStart = await getFormatedDate(projectStart);
-    const newProjectDue = await getFormatedDate(projectDue);
+    const counselingDateSession = await getFormatedDate(counselingDate);
 
     // Get Giftwrap documents from Firestore
     const eventsDocs = doc(eventsCol, `${dateApi}`);
@@ -61,29 +59,28 @@ export default async function userHandler(
     await setDoc(eventsDocs, {
       _id: dateApi,
       status: status,
-      toDo: toDo,
-      projectStart: newProjectStart,
-      projectDue: newProjectDue,
-      clientName: clientName,
-      projectName: projectName,
-      projectLead: projectLead,
-      hours: hours,
+      counselor: counselor,
+      client: client,
+      counselingDate: counselingDateSession,
+      state: state,
+      clientGrant: clientGrant,
       billed: billed,
+      notes: notes,
     });
 
     try {
-      res.status(201).json({ projectName, clientName });
+      res.status(201).json({ counselor, client });
     } catch (err) {
       res.status(500).send({ error: 'failed fetch' });
     }
   } else if (req.method === 'PUT') {
-    const eventRef = doc(database, 'Daily Events', `${req.body}`);
+    const eventRef = doc(database, 'Clients', `${req.body}`);
 
     await deleteDoc(eventRef);
 
     res.status(201).json({ removedId: req.body });
   } else if (req.method == 'GET') {
-    const eventsCol = createCollection<IProject>('Daily Events');
+    const eventsCol = createCollection<IProject>('Clients');
     const getEventsDocs = await getDocs(eventsCol);
 
     // Returns values
