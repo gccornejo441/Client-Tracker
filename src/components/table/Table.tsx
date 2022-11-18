@@ -60,68 +60,41 @@ const Table = (props: IEventProps) => {
             className='border-0 text-5xl font-bold text-indigo-800 outline-none outline-offset-0'
           />
         </div> */}
-        <div className='flex flex-col items-start border-2 border-red-500'>
+        <div className='flex flex-col items-start'>
           <Planner
             isOpen={isOpen}
             closeModal={closeModal}
             openModal={openModal}
           />
         </div>
-        <div className='mt-7 w-[100vw]'>
-          <table className='table-auto'>
-            <thead className='text-xs'>
-              <tr className='sm:mb-0 sm:table-row'>
-                <th
-                  scope='col'
-                  className='flex flex-col p-4 text-left md:inline'
-                >
-                  <td>
-                    <div className='flex'>
-                      <input
-                        id='checkbox-all-search'
-                        type='checkbox'
-                        className='h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600'
-                      />
-                      <label htmlFor='checkbox-all-search' className='sr-only'>
-                        checkbox
-                      </label>
-                    </div>
-                  </td>
-                </th>
+        <div className='mt-7'>
+          <table className='w-full whitespace-nowrap'>
+            <tbody className=''>
+              <tr>
                 {TABLELABELS.map((label, index) => (
-                  <th
+                  <td
                     key={index}
-                    scope='col'
-                    className='mx-6 flex flex-col border-2 border-black px-6 pl-5 text-left md:inline'
+                    className='mx-6 border border-gray-100 bg-indigo-200 px-6 pl-5 text-left'
                   >
-                    <td>{label}</td>
-                  </th>
+                    {label}
+                  </td>
                 ))}
               </tr>
-            </thead>
-            <tbody>
               {props.eventValues.map((event: IProject) => (
                 <tr
                   key={event._id}
                   tabIndex={0}
                   className='h-16 rounded border border-gray-200 focus:outline-none'
                 >
-                  <td>
-                    <div className='ml-5'>
-                      <div className='relative flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-sm bg-gray-200'>
-                        <input
-                          placeholder='checkbox'
-                          type='checkbox'
-                          className='checkbox absolute h-full w-full cursor-pointer opacity-0 focus:opacity-100'
-                        />
-                      </div>
-                    </div>
-                  </td>
-                  <td>
+                  <td
+                    className={
+                      event.status == 'open'
+                        ? 'mr-2 bg-green-500 text-base font-medium uppercase leading-none text-white'
+                        : 'mr-2 text-base font-medium uppercase leading-none text-gray-700'
+                    }
+                  >
                     <div className='flex items-center pl-5'>
-                      <p className='mr-2 text-base font-medium leading-none text-gray-700'>
-                        {event.status}
-                      </p>
+                      <p>{event.status}</p>
                     </div>
                   </td>
                   <td className='pl-5'>
@@ -188,10 +161,40 @@ const Table = (props: IEventProps) => {
                           leaveTo='transform opacity-0 scale-95'
                         >
                           <Menu.Items className='absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+                            <div className='px-1 py-1'>
+                              <Menu.Item>
+                                {({ active }) => (
+                                  <button
+                                    onClick={() => handleRemove(event._id)}
+                                    className={`${
+                                      active
+                                        ? 'bg-indigo-500 text-white'
+                                        : 'text-gray-900'
+                                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                  >
+                                    {active ? (
+                                      <DropDownIcon.DeleteActiveIcon
+                                        className='mr-2 h-5 w-5 text-indigo-400'
+                                        aria-hidden='true'
+                                      />
+                                    ) : (
+                                      <DropDownIcon.DeleteInactiveIcon
+                                        className='mr-2 h-5 w-5 text-indigo-400'
+                                        aria-hidden='true'
+                                      />
+                                    )}
+                                    Delete
+                                  </button>
+                                )}
+                              </Menu.Item>
+                            </div>
                             <div className='px-1 py-1 '>
                               <Menu.Item>
                                 {({ active }) => (
                                   <button
+                                    onClick={() => {
+                                      alert('RELAX, THIS DOES NOTHING!');
+                                    }}
                                     className={`${
                                       active
                                         ? 'bg-indigo-500 text-white'
@@ -216,6 +219,9 @@ const Table = (props: IEventProps) => {
                               <Menu.Item>
                                 {({ active }) => (
                                   <button
+                                    onClick={() => {
+                                      alert('RELAX, THIS DOES NOTHING!');
+                                    }}
                                     className={`${
                                       active
                                         ? 'bg-indigo-500 text-white'
@@ -242,6 +248,9 @@ const Table = (props: IEventProps) => {
                               <Menu.Item>
                                 {({ active }) => (
                                   <button
+                                    onClick={() => {
+                                      alert('RELAX, THIS DOES NOTHING!');
+                                    }}
                                     className={`${
                                       active
                                         ? 'bg-indigo-500 text-white'
@@ -266,6 +275,9 @@ const Table = (props: IEventProps) => {
                               <Menu.Item>
                                 {({ active }) => (
                                   <button
+                                    onClick={() => {
+                                      alert('RELAX, THIS DOES NOTHING!');
+                                    }}
                                     className={`${
                                       active
                                         ? 'bg-indigo-500 text-white'
@@ -284,33 +296,6 @@ const Table = (props: IEventProps) => {
                                       />
                                     )}
                                     Move
-                                  </button>
-                                )}
-                              </Menu.Item>
-                            </div>
-                            <div className='px-1 py-1'>
-                              <Menu.Item>
-                                {({ active }) => (
-                                  <button
-                                    onClick={() => handleRemove(event._id)}
-                                    className={`${
-                                      active
-                                        ? 'bg-indigo-500 text-white'
-                                        : 'text-gray-900'
-                                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                                  >
-                                    {active ? (
-                                      <DropDownIcon.DeleteActiveIcon
-                                        className='mr-2 h-5 w-5 text-indigo-400'
-                                        aria-hidden='true'
-                                      />
-                                    ) : (
-                                      <DropDownIcon.DeleteInactiveIcon
-                                        className='mr-2 h-5 w-5 text-indigo-400'
-                                        aria-hidden='true'
-                                      />
-                                    )}
-                                    Delete
                                   </button>
                                 )}
                               </Menu.Item>
