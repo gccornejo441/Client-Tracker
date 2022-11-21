@@ -31,7 +31,6 @@ const Table = (props: IEventProps) => {
   function openModal() {
     setIsOpen(true);
   }
-
   const router = useRouter();
 
   const handleRemove = async (id: number) => {
@@ -126,13 +125,6 @@ const Table = (props: IEventProps) => {
                     <div className='flex items-center'>
                       <p className='ml-2 text-sm leading-none text-gray-600'>
                         {event.billed}
-                      </p>
-                    </div>
-                  </td>
-                  <td className='mr-2 px-10 text-base font-medium uppercase leading-none text-gray-700'>
-                    <div className='flex items-center'>
-                      <p className='ml-2 text-sm leading-none text-gray-600'>
-                        {event.notes}
                       </p>
                     </div>
                   </td>
