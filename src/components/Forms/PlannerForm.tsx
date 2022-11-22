@@ -65,6 +65,12 @@ export const EmailForm = ({ closeModal }: IClose) => {
       headers: {
         'Content-Type': 'application/json',
       },
+    }).then((res) => {
+      if (res.ok)
+        router.push({
+          pathname: '/[client]/',
+          query: { id: client },
+        });
     });
 
     router.reload();
@@ -90,7 +96,7 @@ export const EmailForm = ({ closeModal }: IClose) => {
                 { label: 'Awaiting Intakes', value: 'awaiting intakes' },
                 { label: 'Closing', value: 'closing' },
                 { label: 'Closed', value: 'closed' },
-                { label: 'Ongoing', value: 'Ongoing' },
+                { label: 'Ongoing', value: 'ongoing' },
               ]}
             />
           </div>

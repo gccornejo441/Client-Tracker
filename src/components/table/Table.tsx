@@ -1,4 +1,5 @@
 import { Menu, Transition } from '@headlessui/react';
+import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 
@@ -24,6 +25,28 @@ const TABLELABELS = [
 const Table = (props: IEventProps) => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
+  function trueColor(statusType: string) {
+    let statusClass = '';
+    switch (statusType) {
+      case 'not counseled':
+        statusClass = 'bg-red-500 text-white';
+        break;
+      case 'counseled':
+        statusClass = 'bg-cyan-500 text-white';
+        break;
+      case 'awaiting intakes':
+        statusClass = 'bg-orange-500 text-white';
+        break;
+      case 'closing':
+        statusClass = 'bg-black-500 text-white';
+        break;
+      case 'Ongoing':
+        statusClass = 'bg-red-400 text-white';
+        break;
+    }
+    return statusClass;
+  }
+
   function closeModal() {
     setIsOpen(false);
   }
@@ -31,6 +54,7 @@ const Table = (props: IEventProps) => {
   function openModal() {
     setIsOpen(true);
   }
+
   const router = useRouter();
 
   const handleRemove = async (id: number) => {
@@ -78,11 +102,10 @@ const Table = (props: IEventProps) => {
                   className='h-16 rounded border border-gray-200 focus:outline-none'
                 >
                   <td
-                    className={
-                      event.status == 'not counseled'
-                        ? 'mr-2 bg-red-500 px-10 text-base font-medium uppercase leading-none text-white'
-                        : 'mr-2 px-10 text-base font-medium uppercase leading-none text-gray-700'
-                    }
+                    className={clsx(
+                      trueColor(event.status),
+                      'mr-2 px-10 text-base font-medium uppercase leading-none'
+                    )}
                   >
                     <div className='flex items-center'>
                       <p>{event.status}</p>
@@ -105,7 +128,7 @@ const Table = (props: IEventProps) => {
                   <td className='mr-2 px-10 text-base font-medium uppercase leading-none text-gray-700'>
                     <div className='flex items-center'>
                       <p className='ml-2 text-sm leading-none text-gray-600'>
-                        {event.counselingDate}
+                        {event.counselingDate} @ {event.timeNoteSubmitted}
                       </p>
                     </div>
                   </td>
@@ -117,15 +140,21 @@ const Table = (props: IEventProps) => {
                     </div>
                   </td>
                   <td className='mr-2 px-10 text-base font-medium uppercase leading-none text-gray-700'>
-                    <button className='rounded bg-red-100 py-3 px-3 text-sm leading-none text-red-700 focus:outline-none'>
+                    <p className='rounded bg-yellow-100 py-3 px-3 text-sm leading-none text-yellow-700 focus:outline-none'>
                       {event.clientGrant}
-                    </button>
+                    </p>
                   </td>
                   <td className='mr-2 px-10 text-base font-medium uppercase leading-none text-gray-700'>
                     <div className='flex items-center'>
-                      <p className='ml-2 text-sm leading-none text-gray-600'>
-                        {event.billed}
-                      </p>
+                      {event.billed == 'yes' ? (
+                        <p className='rounded bg-green-100 py-3 px-3 text-sm leading-none text-green-700 focus:outline-none'>
+                          {event.billed}
+                        </p>
+                      ) : (
+                        <p className='rounded bg-red-100 py-3 px-3 text-sm leading-none text-red-700 focus:outline-none'>
+                          {event.billed}
+                        </p>
+                      )}
                     </div>
                   </td>
                   <td className='mr-2 px-10 text-base font-medium uppercase leading-none text-gray-700'>

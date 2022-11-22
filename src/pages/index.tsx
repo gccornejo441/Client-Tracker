@@ -1,6 +1,7 @@
 import * as React from 'react';
 import useSWR from 'swr';
 
+import SearchClient from '@/components/Forms/SearchClient';
 import Layout from '@/components/layout/Layout';
 import UnderlineLink from '@/components/links/UnderlineLink';
 import Seo from '@/components/Seo';
@@ -37,6 +38,7 @@ export default function HomePage() {
       <main>
         <section className='bg-gray-100'>
           <div className='layout flex min-h-screen flex-col items-center justify-center text-center'>
+            <SearchClient />
             <div>
               <Table eventValues={data} />
             </div>

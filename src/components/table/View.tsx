@@ -60,7 +60,7 @@ const View = ({ children }: AuxProps) => {
                   >
                     Counseling Session Notes
                   </Dialog.Title>
-                  <div className='mt-2'>
+                  <div className='mt-2 break-words'>
                     <p className='text-lg text-gray-500'>{children}</p>
                     <br />
                   </div>

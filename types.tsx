@@ -20,6 +20,7 @@ export interface IProject {
   counselor: string;
   client: string;
   counselingDate: string;
+  timeNoteSubmitted: string;
   state: string;
   clientGrant: string;
   billed: string;
