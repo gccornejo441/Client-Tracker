@@ -35,10 +35,10 @@ const Table = (props: IEventProps) => {
         statusClass = 'bg-cyan-500 text-white';
         break;
       case 'awaiting intakes':
-        statusClass = 'bg-orange-500 text-white';
+        statusClass = 'bg-orange-400 text-white';
         break;
       case 'closing':
-        statusClass = 'bg-black-500 text-white';
+        statusClass = 'bg-black text-white';
         break;
       case 'Ongoing':
         statusClass = 'bg-red-400 text-white';
@@ -104,47 +104,47 @@ const Table = (props: IEventProps) => {
                   <td
                     className={clsx(
                       trueColor(event.status),
-                      'mr-2 px-10 text-base font-medium uppercase leading-none'
+                      'mr-2 px-10 font-medium uppercase leading-none'
                     )}
                   >
                     <div className='flex items-center'>
                       <p>{event.status}</p>
                     </div>
                   </td>
-                  <td className='mr-2 px-10 text-base font-medium uppercase leading-none text-gray-700'>
+                  <td className='mr-2 px-10 font-medium uppercase leading-none text-gray-700'>
                     <div className='flex items-center'>
                       <p className='ml-2 text-sm leading-none text-gray-600'>
                         {event.counselor}
                       </p>
                     </div>
                   </td>
-                  <td className='mr-2 px-10 text-base font-medium uppercase leading-none text-gray-700'>
+                  <td className='mr-2 px-10 font-medium uppercase leading-none text-gray-700'>
                     <div className='flex items-center'>
                       <p className='ml-2 text-sm leading-none text-gray-600'>
                         {event.client}
                       </p>
                     </div>
                   </td>
-                  <td className='mr-2 px-10 text-base font-medium uppercase leading-none text-gray-700'>
+                  <td className='mr-2 px-10 font-medium uppercase leading-none text-gray-700'>
                     <div className='flex items-center'>
                       <p className='ml-2 text-sm leading-none text-gray-600'>
                         {event.counselingDate} @ {event.timeNoteSubmitted}
                       </p>
                     </div>
                   </td>
-                  <td className='mr-2 px-10 text-base font-medium uppercase leading-none text-gray-700'>
+                  <td className='mr-2 px-10 font-medium uppercase leading-none text-gray-700'>
                     <div className='flex items-center'>
                       <p className='ml-2 text-sm leading-none text-gray-600'>
                         {event.state}
                       </p>
                     </div>
                   </td>
-                  <td className='mr-2 px-10 text-base font-medium uppercase leading-none text-gray-700'>
+                  <td className='mr-2 px-10 font-medium uppercase leading-none text-gray-700'>
                     <p className='rounded bg-yellow-100 py-3 px-3 text-sm leading-none text-yellow-700 focus:outline-none'>
                       {event.clientGrant}
                     </p>
                   </td>
-                  <td className='mr-2 px-10 text-base font-medium uppercase leading-none text-gray-700'>
+                  <td className='mr-2 px-10 font-medium uppercase leading-none text-gray-700'>
                     <div className='flex items-center'>
                       {event.billed == 'yes' ? (
                         <p className='rounded bg-green-100 py-3 px-3 text-sm leading-none text-green-700 focus:outline-none'>
@@ -157,7 +157,7 @@ const Table = (props: IEventProps) => {
                       )}
                     </div>
                   </td>
-                  <td className='mr-2 px-10 text-base font-medium uppercase leading-none text-gray-700'>
+                  <td className='mr-2 px-10 font-medium uppercase leading-none text-gray-700'>
                     <View>{event.notes}</View>
                   </td>
                   <td>
