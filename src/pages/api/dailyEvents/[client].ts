@@ -30,11 +30,16 @@ export default async function userHandler(
     // Returns values
     const eventValues: IProject[] = [];
 
-    getClientsDocs.docs.forEach((eventDoc) => {
-      const event = eventDoc.data();
-      eventValues.push(event);
-    });
+    const getClientData = () => {
+      getClientsDocs.docs.forEach((eventDoc) => {
+        const event = eventDoc.data();
+        if (event.client == client.client) {
+          eventValues.push(event);
+        }
+      });
+      return eventValues;
+    };
 
-    res.status(200).json({ eventValues: eventValues });
+    res.status(200).json({ eventValues: getClientData() });
   }
 }
