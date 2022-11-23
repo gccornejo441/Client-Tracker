@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import * as React from 'react';
 import useSWR from 'swr';
 
@@ -28,7 +29,17 @@ export default function HomePage() {
   );
 
   if (error) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
+  if (!data)
+    return (
+      <div>
+        <Image
+          src='https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-Sausage-Burrito-1:product-header-desktop?wid=829&hei=455&dpr=off'
+          width='full'
+          height={100}
+          alt='BURRITO ???'
+        />
+      </div>
+    );
 
   return (
     <Layout>
@@ -37,13 +48,10 @@ export default function HomePage() {
 
       <main>
         <section className='bg-gray-100'>
-          <div className='flex min-h-screen flex-col items-center justify-center text-center'>
+          <div className='flex min-h-screen flex-col justify-center text-center'>
             <SearchClient />
-            <div>
-              <Table eventValues={data} />
-            </div>
-
-            <footer className='absolute bottom-2 text-gray-700'>
+            <Table eventValues={data} />
+            <footer className='my-10 text-gray-700'>
               © {new Date().getFullYear()}{' '}
               <UnderlineLink href='https://www.webworksdreams.com/'>
                 Client Tracker By WebWorkDreams

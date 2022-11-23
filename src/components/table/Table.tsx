@@ -73,7 +73,7 @@ const Table = (props: IEventProps) => {
   };
 
   return (
-    <div className='sm:px-6'>
+    <div className='max-w-[100vw]'>
       <div className='bg-white py-4 px-4 md:py-7 md:px-8 xl:px-10'>
         <div className='flex flex-col items-start'>
           <Planner
@@ -82,7 +82,7 @@ const Table = (props: IEventProps) => {
             openModal={openModal}
           />
         </div>
-        <div className='mt-7'>
+        <div className='mt-7 h-full overflow-y-scroll scrollbar-thin scrollbar-track-indigo-300 scrollbar-thumb-indigo-700'>
           <table className='w-full whitespace-nowrap'>
             <tbody>
               <tr>
@@ -167,7 +167,7 @@ const Table = (props: IEventProps) => {
                         className='relative inline-block text-left'
                       >
                         <div>
-                          <Menu.Button className='rounded bg-gray-100 py-3 px-5 text-sm leading-none text-gray-600 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-red-300 focus:ring-offset-2'>
+                          <Menu.Button className='rounded bg-gray-100 py-3 px-5 text-sm leading-none text-gray-600 focus:outline-none focus:ring-2 focus:ring-red-300 focus:ring-offset-2 hover:bg-gray-200'>
                             <MenuButtonSVG />
                           </Menu.Button>
                         </div>

@@ -22,7 +22,7 @@ const View = ({ children }: AuxProps) => {
         <button
           type='button'
           onClick={openModal}
-          className="className='rounded focus:ring-offset-2' bg-gray-100 py-3 px-5 text-sm leading-none text-gray-600 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-red-300"
+          className="className='rounded focus:ring-offset-2' bg-gray-100 py-3 px-5 text-sm leading-none text-gray-600 focus:outline-none focus:ring-2 focus:ring-red-300 hover:bg-gray-200"
         >
           View
         </button>
@@ -68,7 +68,7 @@ const View = ({ children }: AuxProps) => {
                   <div className='mt-4'>
                     <button
                       type='button'
-                      className='inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'
+                      className='inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 hover:bg-blue-200'
                       onClick={closeModal}
                     >
                       Got it, thanks!

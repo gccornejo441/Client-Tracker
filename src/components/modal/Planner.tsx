@@ -11,7 +11,7 @@ export const Planner = ({ isOpen, closeModal, openModal }: IPlannerProps) => {
         <button
           type='button'
           onClick={openModal}
-          className='mt-4 inline-flex items-start justify-start rounded bg-indigo-700 px-6 py-3 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 sm:mt-0'
+          className='mt-4 inline-flex items-start justify-start rounded bg-indigo-700 px-6 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 hover:bg-indigo-600 sm:mt-0'
         >
           <p className='text-sm font-medium leading-none text-white'>
             Add A Client Note
@@ -56,7 +56,7 @@ export const Planner = ({ isOpen, closeModal, openModal }: IPlannerProps) => {
                   <div className='mt-4 flex justify-between'>
                     <button
                       type='button'
-                      className='inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'
+                      className='inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 hover:bg-red-200'
                       onClick={closeModal}
                     >
                       Cancel

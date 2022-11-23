@@ -41,7 +41,7 @@ const SearchClient = () => {
             </label>
             <input
               type='text'
-              className='group flex h-6 w-6 items-center justify-center sm:justify-start md:h-auto md:w-80 md:flex-none md:rounded-lg md:py-2.5 md:pl-4 md:pr-3.5 md:text-sm md:ring-1 md:ring-slate-200 md:hover:ring-slate-300 dark:md:bg-slate-800/75 dark:md:ring-inset dark:md:ring-white/5 dark:md:hover:bg-slate-700/40 dark:md:hover:ring-slate-500 lg:w-96'
+              className='focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
               defaultValue={intialValues.client}
               {...register('client')}
             />
@@ -50,7 +50,7 @@ const SearchClient = () => {
             <input
               value='Submit'
               type='submit'
-              className='mt-4 w-1/2 cursor-pointer rounded bg-indigo-700 px-6 py-3 text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 sm:mt-0'
+              className='mt-4 w-1/2 cursor-pointer rounded bg-indigo-700 px-6 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 hover:bg-indigo-600 sm:mt-0'
             />
           </div>
         </form>
