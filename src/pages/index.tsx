@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import * as React from 'react';
 import useSWR from 'swr';
 
@@ -31,15 +30,8 @@ export default function HomePage() {
   if (error) return <div>failed to load</div>;
   if (!data)
     return (
-      <div>
-        <Image
-          src='https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-Sausage-Burrito-1:product-header-desktop?wid=829&hei=455&dpr=off'
-          layout='fill'
-          sizes='(max-width: 768px) 100vw,
-              (max-width: 1200px) 50vw,
-              33vw'
-          alt='BURRITO ???'
-        />
+      <div className='text-center'>
+        <div className='spinner'></div>
       </div>
     );
 
