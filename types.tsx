@@ -63,3 +63,8 @@ export type UseControllerProps<TFieldValues extends FieldValues = FieldValues> =
     defaultValue?: unknown;
     control?: Control<TFieldValues>;
   };
+
+export interface IEmployee {
+  email: string;
+  password: string;
+}

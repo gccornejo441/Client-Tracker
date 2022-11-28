@@ -1,6 +1,7 @@
 import * as React from 'react';
 import useSWR from 'swr';
 
+// import LoginForm from '@/components/Forms/LoginForm';
 import SearchClient from '@/components/Forms/SearchClient';
 import Layout from '@/components/layout/Layout';
 import UnderlineLink from '@/components/links/UnderlineLink';
@@ -26,6 +27,7 @@ export default function HomePage() {
       headers: { 'Content-Type': 'application/json' },
     }).then((res) => res.json())
   );
+  // const [userEmail, setUserEmail] = React.useState(null);
 
   if (error) return <div>failed to load</div>;
   if (!data)
@@ -43,8 +45,23 @@ export default function HomePage() {
       <main>
         <section className='bg-gray-100'>
           <div className='flex min-h-screen flex-col justify-center text-center'>
-            <SearchClient />
-            <Table eventValues={data} />
+            <div className='mx-auto border-2 border-black'>
+              {/* <LoginForm
+              setUserEmail={setUserEmail}
+              /> */}
+            </div>
+
+            <div>
+              <SearchClient />
+              <Table eventValues={data} />
+              {/* {userEmail !== null ? (
+                <>
+                </>
+              ) : (
+                <></>
+              )} */}
+            </div>
+
             <footer className='my-10 text-gray-700'>
               © {new Date().getFullYear()}{' '}
               <UnderlineLink href='https://www.webworksdreams.com/'>
