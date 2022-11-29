@@ -1,62 +1,56 @@
 import * as React from 'react';
-// import { useForm } from 'react-hook-form';
-// import { IEmployee } from 'types';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { IEmployee } from 'types';
 
-const LoginForm = () => {
-  // const methods = useForm<IEmployee>({ mode: 'onTouched' });
-  // const { register, handleSubmit } = methods;
+interface IProps {
+  setUserEmail: React.Dispatch<React.SetStateAction<string>>;
+}
 
-  // const onSubmit: SubmitHandler<IEmployee> = async (data) => {
-  //   // Sets form data into Firestore
+const LoginForm = ({ setUserEmail }: IProps) => {
+  const methods = useForm<IEmployee>({ mode: 'onTouched' });
+  const { register, handleSubmit } = methods;
+  const [failedAuth, setFailedAuth] = React.useState(null);
 
-  //   // const {
-  //   //   email,
-  //   //   password,
-  //   // } = data;
+  const onSubmit: SubmitHandler<IEmployee> = async (data) => {
+    const { email, password } = data;
 
-  //   // const response = await fetch('/api/employees/', {
-  //   //   body: JSON.stringify({
-  //   //     email,
-  //   //     password,
-  //   //   }),
-  //   //   method: 'POST',
-  //   //   headers: {
-  //   //     'Content-Type': 'application/json',
-  //   //   },
-  //   // })
+    const response = await fetch('/api/employees/', {
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
-  //   // const content = await response.json();
+    const userContent = await response.json();
 
-  //   // setUserEmail(data)
-  // };
+    if (userContent.error) {
+      setFailedAuth(userContent.error);
+    } else {
+      setUserEmail(userContent.email);
+    }
+  };
 
   return (
-    <div className='z-10 w-full max-w-md space-y-8 rounded-xl bg-white p-10'>
+    <div className='z-10 mx-auto w-full max-w-md space-y-8 rounded-xl bg-white p-10'>
       <div className='text-center'>
         <h2 className='mt-6 text-3xl font-bold text-gray-900'>Welcome Back!</h2>
-        <p className='mt-2 text-sm text-gray-600'>
-          Please sign in to your account
-        </p>
+        {!failedAuth ? (
+          <p className='mt-2 text-sm text-gray-600'>
+            Please sign in to your account
+          </p>
+        ) : (
+          <p className='my-5 mb-6 rounded-md border border-red-300 bg-red-50 p-3 text-center font-medium text-red-500'>
+            {failedAuth}
+          </p>
+        )}
       </div>
 
-      {/* <form className='mt-8 space-y-6' onSubmit={handleSubmit(onSubmit)}>
+      <form className='mt-8 space-y-6' onSubmit={handleSubmit(onSubmit)}>
         <div className='relative'>
-          <div className='absolute right-0 mt-4'>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              className='h-6 w-6 text-green-500'
-              fill='none'
-              viewBox='0 0 24 24'
-              stroke='currentColor'
-            >
-              <path
-                stroke-linecap='round'
-                stroke-linejoin='round'
-                stroke-width='2'
-                d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'
-              ></path>
-            </svg>
-          </div>
           <label className='text-sm font-bold tracking-wide text-gray-700'>
             Email
           </label>
@@ -81,7 +75,7 @@ const LoginForm = () => {
         <div>
           <input
             type='submit'
-            className='focus:shadow-outline flex w-full cursor-pointer justify-center rounded-full  bg-indigo-500 p-4
+            className='focus:shadow-outline flex w-full cursor-pointer justify-center rounded-full bg-indigo-500 p-4
                                 font-semibold  tracking-wide text-gray-100 shadow-lg transition duration-300 ease-in focus:outline-none hover:bg-indigo-600'
           />
         </div>
@@ -94,7 +88,7 @@ const LoginForm = () => {
             Sign up
           </a>
         </p>
-      </form> */}
+      </form>
     </div>
   );
 };

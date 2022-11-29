@@ -1,36 +1,28 @@
-// import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-// import { auth } from '../../../lib/firebaseConfig';
+import { auth } from '../../../lib/firebaseConfig';
 
 export default async function userHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // const { email, password } = req.body;
+  const { email, password } = req.body;
 
   if (req.method === 'POST') {
-    // const sssss = await signInWithEmailAndPassword(auth, email, password);
-    // .then((userCredential) => {
-    //   // Signed in
-    //   const user = userCredential.user;
-    //   user.toJSON()
-    //   console.log("user: ", user)
-
-    // })
-    // .catch((error) => {
-    //   const errorCode = error.code;
-    //   const errorMessage = error.message;
-    // });
-
-    // const cnt = sssss.user
-
-    // console.log("cnnnnnn: ", cnt)
-
     try {
-      res.status(201);
+      const userAuthEmail = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const userInformation = userAuthEmail.user;
+
+      res.status(201).json({ email: userInformation.email });
     } catch (err) {
-      res.status(500).send({ error: 'failed fetch' });
+      res
+        .status(500)
+        .send({ error: 'These credentials do not match our records.' });
     }
   } else {
     res.setHeader('Allow', ['POST']);

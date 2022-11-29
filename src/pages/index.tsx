@@ -1,7 +1,7 @@
 import * as React from 'react';
 import useSWR from 'swr';
 
-// import LoginForm from '@/components/Forms/LoginForm';
+import LoginForm from '@/components/Forms/LoginForm';
 import SearchClient from '@/components/Forms/SearchClient';
 import Layout from '@/components/layout/Layout';
 import UnderlineLink from '@/components/links/UnderlineLink';
@@ -21,13 +21,14 @@ import Table from '@/components/table/Table';
 // to customize the default configuration.
 
 export default function HomePage() {
+  const [userEmail, setUserEmail] = React.useState('');
+
   const { data, error } = useSWR(`/api/dailyEvents/`, (apiURL: string) =>
     fetch(apiURL, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     }).then((res) => res.json())
   );
-  // const [userEmail, setUserEmail] = React.useState(null);
 
   if (error) return <div>failed to load</div>;
   if (!data)
@@ -45,21 +46,18 @@ export default function HomePage() {
       <main>
         <section className='bg-gray-100'>
           <div className='flex min-h-screen flex-col justify-center text-center'>
-            <div className='mx-auto border-2 border-black'>
-              {/* <LoginForm
-              setUserEmail={setUserEmail}
-              /> */}
-            </div>
-
             <div>
-              <SearchClient />
-              <Table eventValues={data} />
-              {/* {userEmail !== null ? (
-                <>
-                </>
+              {!userEmail ? (
+                <div>
+                  <LoginForm setUserEmail={setUserEmail} />
+                </div>
               ) : (
-                <></>
-              )} */}
+                <>
+                  <h2>Welcome, {userEmail}</h2>
+                  <SearchClient />
+                  <Table eventValues={data} />
+                </>
+              )}
             </div>
 
             <footer className='my-10 text-gray-700'>
