@@ -37,7 +37,7 @@ const SearchClient = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className='flex flex-col text-center'>
             <label htmlFor='client' className='my-5 text-xl font-semibold'>
-              Please enter the client full name
+              Please search by the client full name
             </label>
             <input
               type='text'
@@ -48,7 +48,7 @@ const SearchClient = () => {
           </div>
           <div className='mx-auto my-10 flex justify-center text-center'>
             <input
-              value='Submit'
+              value='Search'
               type='submit'
               className='mt-4 w-1/2 cursor-pointer rounded bg-indigo-700 px-6 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 hover:bg-indigo-600 sm:mt-0'
             />

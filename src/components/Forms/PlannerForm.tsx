@@ -10,7 +10,13 @@ import { IClose, IProject } from '../../../types';
 
 export const EmailForm = ({ closeModal }: IClose) => {
   const methods = useForm<IProject>({ mode: 'onTouched' });
-  const { register, handleSubmit } = methods;
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitSuccessful },
+    reset,
+  } = methods;
+  const [submittedData, setSubmittedData] = React.useState({});
 
   const router = useRouter();
 
@@ -36,6 +42,12 @@ export const EmailForm = ({ closeModal }: IClose) => {
     )
   );
 
+  React.useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset({ ...submittedData });
+    }
+  }, [submittedData, reset, isSubmitSuccessful]);
+
   const onSubmit: SubmitHandler<IProject> = (data) => {
     // Sets form data into Firestore
 
@@ -49,6 +61,8 @@ export const EmailForm = ({ closeModal }: IClose) => {
       billed,
       notes,
     } = data;
+
+    setSubmittedData(data);
 
     fetch('/api/dailyEvents/', {
       body: JSON.stringify({
@@ -76,6 +90,11 @@ export const EmailForm = ({ closeModal }: IClose) => {
     router.reload();
   };
 
+  const handleClick = () => {
+    reset({});
+    closeModal();
+  };
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -90,6 +109,7 @@ export const EmailForm = ({ closeModal }: IClose) => {
             <Select
               className='focus:shadow-outline mb-3 w-full appearance-none rounded py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
               {...register('status')}
+              required={true}
               options={[
                 { label: 'Not Counseled', value: 'not counseled' },
                 { label: 'Counseled', value: 'counseled' },
@@ -101,7 +121,7 @@ export const EmailForm = ({ closeModal }: IClose) => {
             />
           </div>
           <div className='mb-4'>
-            <Input label='Client' id='client' />
+            <Input required={true} label='Client' id='client' />
           </div>
           <div>
             <label
@@ -113,6 +133,7 @@ export const EmailForm = ({ closeModal }: IClose) => {
             <Select
               className='focus:shadow-outline mb-3 w-full appearance-none rounded py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
               {...register('counselor')}
+              required={true}
               options={[
                 { label: 'Thomas G', value: 'thomas' },
                 { label: 'Gabe C', value: 'gabe' },
@@ -121,13 +142,14 @@ export const EmailForm = ({ closeModal }: IClose) => {
           </div>
           <div className='mb-4'>
             <DatePicker
+              required={true}
               id='counselingDate'
               label='Counseling Session Date'
               placeholder='Select your date assigned'
             />
           </div>
           <div className='mb-4'>
-            <Input label='State' id='state' />
+            <Input required={true} label='State' id='state' />
           </div>
           <div>
             <label
@@ -139,6 +161,7 @@ export const EmailForm = ({ closeModal }: IClose) => {
             <Select
               className='focus:shadow-outline mb-3 w-full appearance-none rounded py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
               {...register('clientGrant')}
+              required={true}
               options={[
                 { label: 'NMS', value: 'nms' },
                 { label: 'HSPC', value: 'hspc' },
@@ -156,6 +179,7 @@ export const EmailForm = ({ closeModal }: IClose) => {
             <Select
               className='focus:shadow-outline mb-3 w-full appearance-none rounded py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
               {...register('billed')}
+              required={true}
               options={[
                 { label: 'Yes', value: 'yes' },
                 { label: 'No', value: 'no' },
@@ -163,16 +187,24 @@ export const EmailForm = ({ closeModal }: IClose) => {
             />
           </div>
           <div className='mb-4'>
-            <Textarea label='Notes' id='notes' rows={3} />
+            <Textarea required={true} label='Notes' id='notes' rows={3} />
           </div>
         </div>
 
         <input
           className='inline-flex cursor-pointer justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 hover:bg-blue-200'
           type='submit'
-          onClick={closeModal}
         />
       </form>
+      <div className='mt-4 flex justify-between'>
+        <button
+          type='button'
+          className='inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 hover:bg-red-200'
+          onClick={handleClick}
+        >
+          Cancel
+        </button>
+      </div>
     </FormProvider>
   );
 };
