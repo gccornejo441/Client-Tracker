@@ -11,14 +11,13 @@ export default async function userHandler(
 
   if (req.method === 'POST') {
     try {
-      const userAuthEmail = await signInWithEmailAndPassword(
+      const userCredentials = await signInWithEmailAndPassword(
         auth,
         email,
         password
       );
-      const userInformation = userAuthEmail.user;
 
-      res.status(201).json({ email: userInformation.email });
+      res.status(201).json(userCredentials);
     } catch (err) {
       res
         .status(500)

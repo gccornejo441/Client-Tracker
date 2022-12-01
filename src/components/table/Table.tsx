@@ -82,7 +82,7 @@ const Table = (props: IEventProps) => {
             openModal={openModal}
           />
         </div>
-        <div className='mt-7 h-full overflow-y-scroll scrollbar-thin scrollbar-track-indigo-300 scrollbar-thumb-indigo-700'>
+        <div className='mt-7 h-[500px] overflow-y-scroll scrollbar-thin scrollbar-track-indigo-300 scrollbar-thumb-indigo-700'>
           <table className='w-full whitespace-nowrap'>
             <tbody>
               <tr>

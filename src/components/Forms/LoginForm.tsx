@@ -1,37 +1,19 @@
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import * as React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IEmployee } from 'types';
 
-interface IProps {
-  setUserEmail: React.Dispatch<React.SetStateAction<string>>;
-}
+import { auth } from '@/lib/firebaseConfig';
 
-const LoginForm = ({ setUserEmail }: IProps) => {
+const LoginForm = () => {
   const methods = useForm<IEmployee>({ mode: 'onTouched' });
   const { register, handleSubmit } = methods;
-  const [failedAuth, setFailedAuth] = React.useState(null);
+  const [failedAuth] = React.useState(false);
 
   const onSubmit: SubmitHandler<IEmployee> = async (data) => {
     const { email, password } = data;
 
-    const response = await fetch('/api/employees/', {
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    const userContent = await response.json();
-
-    if (userContent.error) {
-      setFailedAuth(userContent.error);
-    } else {
-      setUserEmail(userContent.email);
-    }
+    await signInWithEmailAndPassword(auth, email, password);
   };
 
   return (
@@ -80,12 +62,12 @@ const LoginForm = ({ setUserEmail }: IProps) => {
           />
         </div>
         <p className='text-md mt-10 flex flex-col items-center justify-center text-center text-gray-500'>
-          <span>Don't have an account?</span>
+          <span>Forgot Password?</span>
           <a
-            href='#'
+            href='mailto:webworksdreams@gmail.com'
             className='hover:text-indigo-500no-underline cursor-pointer text-indigo-500 transition duration-300 ease-in hover:underline'
           >
-            Sign up
+            Email admin
           </a>
         </p>
       </form>

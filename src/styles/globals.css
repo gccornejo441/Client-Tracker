@@ -132,9 +132,9 @@ body::-webkit-scrollbar-thumb {
 .spinner {
   display: block;
   margin: 0px auto;
-  width: 200px;
-  height: 200px;
-  border: 7px solid #a5b4fc;
+  width: 100px;
+  height: 100px;
+  border: 15px solid #a5b4fc;
   border-radius: 50%;
   border-top-color: #4338ca;
   animation: spin 1s linear infinite;
@@ -144,4 +144,12 @@ body::-webkit-scrollbar-thumb {
   to {
     -webkit-transform: rotate(360deg);
   }
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
