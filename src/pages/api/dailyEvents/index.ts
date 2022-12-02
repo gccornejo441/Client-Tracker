@@ -33,16 +33,8 @@ export default async function userHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const {
-    status,
-    client,
-    counselor,
-    counselingDate,
-    state,
-    clientGrant,
-    billed,
-    notes,
-  } = req.body;
+  const { status, client, counselor, counselingDate, state, billed, notes } =
+    req.body;
 
   const dateApi = Date.now();
   const nowTime = new Date();
@@ -68,7 +60,6 @@ export default async function userHandler(
       counselingDate: counselingDateSession,
       timeNoteSubmitted: timeNoteSubmitted,
       state: state,
-      clientGrant: clientGrant,
       billed: billed,
       notes: notes,
     });
@@ -80,7 +71,6 @@ export default async function userHandler(
     }
   } else if (req.method === 'PUT') {
     const eventRef = doc(database, 'Clients', `${req.body}`);
-
     await deleteDoc(eventRef);
 
     res.status(201).json({ removedId: req.body });

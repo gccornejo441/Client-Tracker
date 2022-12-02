@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.3",
+    "@lexical/react": "0.6.4",
     "clsx": "^1.2.1",
     "firebase": "^9.12.1",
     "next": "^12.3.1",

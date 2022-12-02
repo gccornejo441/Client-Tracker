@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 
+import { EditorPlanner } from '@/components/modal/EditorPlanner';
 import { Planner } from '@/components/modal/Planner';
 import * as DropDownIcon from '@/components/table/dropDown';
 
@@ -15,15 +16,27 @@ const TABLELABELS = [
   'Status',
   'Assigned Counselor',
   'Client',
-  'Counseling Session Date',
+  'Date Action Performed',
   'State',
-  'Client Grant Type',
   'Billed',
   'Notes',
 ];
 
 const Table = (props: IEventProps) => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const [isEditorOpen, setIsEditorOpen] = React.useState<boolean>(false);
+
+  const [editEntry, setEditEntry] = React.useState({
+    _id: 0,
+    status: '',
+    counselor: '',
+    client: '',
+    counselingDate: '',
+    timeNoteSubmitted: '',
+    state: '',
+    billed: '',
+    notes: '',
+  });
 
   function trueColor(statusType: string) {
     let statusClass = '';
@@ -35,24 +48,32 @@ const Table = (props: IEventProps) => {
         statusClass = 'bg-cyan-500 text-white';
         break;
       case 'awaiting intakes':
-        statusClass = 'bg-orange-400 text-white';
+        statusClass = 'bg-orange-500 text-white';
         break;
       case 'closing':
         statusClass = 'bg-black text-white';
         break;
-      case 'Ongoing':
-        statusClass = 'bg-red-400 text-white';
+      case 'ongoing':
+        statusClass = 'bg-green-500 text-white';
         break;
     }
     return statusClass;
   }
 
   function closeModal() {
-    setIsOpen(false);
+    if (!isEditorOpen) {
+      setIsOpen(false);
+    } else {
+      setIsEditorOpen(false);
+    }
   }
 
   function openModal() {
     setIsOpen(true);
+  }
+
+  function openEditorModal() {
+    setIsEditorOpen(true);
   }
 
   const router = useRouter();
@@ -72,6 +93,11 @@ const Table = (props: IEventProps) => {
     return response.json();
   };
 
+  const handleEdit = async (event: IProject) => {
+    setEditEntry(event);
+    openEditorModal();
+  };
+
   return (
     <div className='max-w-[100vw]'>
       <div className='bg-white py-4 px-4 md:py-7 md:px-8 xl:px-10'>
@@ -81,6 +107,11 @@ const Table = (props: IEventProps) => {
             closeModal={closeModal}
             openModal={openModal}
           />
+          <EditorPlanner
+            isEditorOpen={isEditorOpen}
+            closeModal={closeModal}
+            editEntry={editEntry}
+          />
         </div>
         <div className='mt-7 h-[500px] overflow-y-scroll scrollbar-thin scrollbar-track-indigo-300 scrollbar-thumb-indigo-700'>
           <table className='w-full whitespace-nowrap'>
@@ -89,7 +120,7 @@ const Table = (props: IEventProps) => {
                 {TABLELABELS.map((label, index) => (
                   <td
                     key={index}
-                    className='mx-6 border border-gray-100 bg-indigo-200 px-6 pl-5 text-left'
+                    className='mx-6 border border-gray-100 bg-indigo-200 pl-5 text-left'
                   >
                     {label}
                   </td>
@@ -104,47 +135,42 @@ const Table = (props: IEventProps) => {
                   <td
                     className={clsx(
                       trueColor(event.status),
-                      'mr-2 px-10 font-medium uppercase leading-none'
+                      'px-4 text-xs font-medium uppercase leading-none md:text-sm'
                     )}
                   >
                     <div className='flex items-center'>
                       <p>{event.status}</p>
                     </div>
                   </td>
-                  <td className='mr-2 px-10 font-medium uppercase leading-none text-gray-700'>
+                  <td className='px-4 font-medium uppercase leading-none text-gray-700'>
                     <div className='flex items-center'>
-                      <p className='ml-2 text-sm leading-none text-gray-600'>
+                      <p className='ml-2 text-xs leading-none text-gray-600 md:text-sm'>
                         {event.counselor}
                       </p>
                     </div>
                   </td>
-                  <td className='mr-2 px-10 font-medium uppercase leading-none text-gray-700'>
+                  <td className='px-4 font-medium uppercase leading-none text-gray-700'>
                     <div className='flex items-center'>
-                      <p className='ml-2 text-sm leading-none text-gray-600'>
+                      <p className='ml-2 text-xs leading-none text-gray-600 md:text-sm'>
                         {event.client}
                       </p>
                     </div>
                   </td>
-                  <td className='mr-2 px-10 font-medium uppercase leading-none text-gray-700'>
+                  <td className='px-4 font-medium uppercase leading-none text-gray-700'>
                     <div className='flex items-center'>
-                      <p className='ml-2 text-sm leading-none text-gray-600'>
+                      <p className='ml-2 text-xs leading-none text-gray-600 md:text-sm'>
                         {event.counselingDate} @ {event.timeNoteSubmitted}
                       </p>
                     </div>
                   </td>
-                  <td className='mr-2 px-10 font-medium uppercase leading-none text-gray-700'>
+                  <td className='px-4 font-medium uppercase leading-none text-gray-700'>
                     <div className='flex items-center'>
-                      <p className='ml-2 text-sm leading-none text-gray-600'>
+                      <p className='ml-2 text-xs leading-none text-gray-600 md:text-sm'>
                         {event.state}
                       </p>
                     </div>
                   </td>
-                  <td className='mr-2 px-10 font-medium uppercase leading-none text-gray-700'>
-                    <p className='rounded bg-yellow-100 py-3 px-3 text-sm leading-none text-yellow-700 focus:outline-none'>
-                      {event.clientGrant}
-                    </p>
-                  </td>
-                  <td className='mr-2 px-10 font-medium uppercase leading-none text-gray-700'>
+                  <td className='px-4 font-medium uppercase leading-none text-gray-700'>
                     <div className='flex items-center'>
                       {event.billed == 'yes' ? (
                         <p className='rounded bg-green-100 py-3 px-3 text-sm leading-none text-green-700 focus:outline-none'>
@@ -157,7 +183,7 @@ const Table = (props: IEventProps) => {
                       )}
                     </div>
                   </td>
-                  <td className='mr-2 px-10 font-medium uppercase leading-none text-gray-700'>
+                  <td className='px-4 font-medium uppercase leading-none text-gray-700'>
                     <View>{event.notes}</View>
                   </td>
                   <td>
@@ -180,7 +206,7 @@ const Table = (props: IEventProps) => {
                           leaveFrom='transform opacity-100 scale-100'
                           leaveTo='transform opacity-0 scale-95'
                         >
-                          <Menu.Items className='absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+                          <Menu.Items className='absolute right-0 top-10 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
                             <div className='px-1 py-1'>
                               <Menu.Item>
                                 {({ active }) => (
@@ -212,9 +238,7 @@ const Table = (props: IEventProps) => {
                               <Menu.Item>
                                 {({ active }) => (
                                   <button
-                                    onClick={() => {
-                                      alert('RELAX, THIS DOES NOTHING!');
-                                    }}
+                                    onClick={() => handleEdit(event)}
                                     className={`${
                                       active
                                         ? 'bg-indigo-500 text-white'

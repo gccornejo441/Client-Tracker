@@ -22,7 +22,6 @@ export interface IProject {
   counselingDate: string;
   timeNoteSubmitted: string;
   state: string;
-  clientGrant: string;
   billed: string;
   notes: string;
 }
@@ -35,6 +34,11 @@ export interface IEventProps {
 
 export interface IClose {
   closeModal(): void;
+}
+
+export interface ICloseEditor {
+  closeModal(): void;
+  editEntry: IProject;
 }
 
 export interface IToggleState {
@@ -50,6 +54,12 @@ export interface IPlannerProps {
   isOpen: boolean;
   closeModal(): void;
   openModal(event: React.MouseEvent<HTMLButtonElement>): void;
+}
+
+export interface IEditorPlannerProps {
+  isEditorOpen: boolean;
+  closeModal(): void;
+  editEntry: IProject;
 }
 
 export type UseControllerProps<TFieldValues extends FieldValues = FieldValues> =

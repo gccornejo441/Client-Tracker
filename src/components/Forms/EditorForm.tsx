@@ -2,16 +2,26 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
-import STATES from '@/lib/states.json';
-
-import DatePicker from '@/components/Forms/DatePicker';
 import Input from '@/components/Forms/Input';
 import Textarea from '@/components/Forms/Textarea';
 
-import { IClose, IProject } from '../../../types';
+import { ICloseEditor, IProject } from '../../../types';
 
-export const EmailForm = ({ closeModal }: IClose) => {
-  const methods = useForm<IProject>({ mode: 'onTouched' });
+export const EditorForm = ({ closeModal, editEntry }: ICloseEditor) => {
+  const methods = useForm<IProject>({
+    mode: 'onTouched',
+    defaultValues: {
+      _id: editEntry._id,
+      status: editEntry.status,
+      counselor: editEntry.counselor,
+      counselingDate: editEntry.counselingDate,
+      timeNoteSubmitted: editEntry.timeNoteSubmitted,
+      client: editEntry.client,
+      state: editEntry.state,
+      billed: editEntry.billed,
+      notes: editEntry.notes,
+    },
+  });
   const {
     register,
     handleSubmit,
@@ -53,17 +63,28 @@ export const EmailForm = ({ closeModal }: IClose) => {
   const onSubmit: SubmitHandler<IProject> = (data) => {
     // Sets form data into Firestore
 
-    const { status, client, counselor, counselingDate, state, billed, notes } =
-      data;
+    const {
+      _id,
+      status,
+      client,
+      counselor,
+      counselingDate,
+      timeNoteSubmitted,
+      state,
+      billed,
+      notes,
+    } = data;
 
     setSubmittedData(data);
 
-    fetch('/api/dailyEvents/', {
+    fetch('/api/dataEntryEdits/', {
       body: JSON.stringify({
+        _id,
         status,
         client,
         counselor,
         counselingDate,
+        timeNoteSubmitted,
         state,
         billed,
         notes,
@@ -72,12 +93,6 @@ export const EmailForm = ({ closeModal }: IClose) => {
       headers: {
         'Content-Type': 'application/json',
       },
-    }).then((res) => {
-      if (res.ok)
-        router.push({
-          pathname: '/[client]/',
-          query: { id: client },
-        });
     });
 
     router.reload();
@@ -113,8 +128,8 @@ export const EmailForm = ({ closeModal }: IClose) => {
               ]}
             />
           </div>
-          <div className='mb-4'>
-            <Input required={true} label='Client' id='client' />
+          <div className='hidden'>
+            <Input label='_id' id='_id' />
           </div>
           <div>
             <label
@@ -134,25 +149,13 @@ export const EmailForm = ({ closeModal }: IClose) => {
             />
           </div>
           <div className='mb-4'>
-            <DatePicker
-              required={true}
-              id='counselingDate'
-              label='Date Action Performed'
-            />
+            <Input label='Date Action Performed' id='counselingDate' />
           </div>
           <div className='mb-4'>
-            <label
-              className='mb-2 block text-sm font-bold text-gray-700'
-              htmlFor='state'
-            >
-              State
-            </label>
-            <Select
-              className='focus:shadow-outline mb-3 w-full appearance-none rounded py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
-              {...register('state')}
-              required={true}
-              options={STATES}
-            />
+            <Input label='Time Action Performed' id='timeNoteSubmitted' />
+          </div>
+          <div className='mb-4'>
+            <Input required={true} label='State' id='state' />
           </div>
           <div>
             <label
