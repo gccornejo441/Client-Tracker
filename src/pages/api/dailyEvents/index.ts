@@ -1,7 +1,14 @@
 import { getDocs } from '@firebase/firestore';
-import { deleteDoc, doc, setDoc } from 'firebase/firestore';
+import {
+  arrayUnion,
+  deleteDoc,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+} from 'firebase/firestore';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { IProject } from 'types';
+import { IEntry } from 'types';
 
 import { createCollection, database } from '../../../lib/firebaseConfig';
 
@@ -22,9 +29,9 @@ const getFormatedDate = async (unformatedDate: string) => {
   ];
   const newDate = new Date(unformatedDate);
 
-  const longDate = `${months[newDate.getMonth()]} 
-         ${newDate.getDate()}, 
-         ${newDate.getFullYear()}`;
+  const longDate = `${
+    months[newDate.getMonth()]
+  } ${newDate.getDate()}, ${newDate.getFullYear()}`;
 
   return longDate;
 };
@@ -36,33 +43,58 @@ export default async function userHandler(
   const { status, client, counselor, counselingDate, state, billed, notes } =
     req.body;
 
+  // Time Formating Data
+  // #########################
   const dateApi = Date.now();
   const nowTime = new Date();
+  // #########################
 
   if (req.method === 'POST') {
     // POST document to Firestore.
     // Giftwrap Collection from Firestore
-    const eventsCol = createCollection<IProject>('Clients');
+    const eventsCol = createCollection<IEntry>('Clients Notes');
 
     const counselingDateSession = await getFormatedDate(counselingDate);
 
     const timeNoteSubmitted = nowTime.getHours() + ':' + nowTime.getMinutes();
 
     // // Get Giftwrap documents from Firestore
-    const eventsDocs = doc(eventsCol, `${dateApi}`);
+    const eventsDocs = doc(eventsCol, client);
 
-    // POST document to Firestore.
-    await setDoc(eventsDocs, {
-      _id: dateApi,
-      status: status,
-      counselor: counselor,
-      client: client,
-      counselingDate: counselingDateSession,
-      timeNoteSubmitted: timeNoteSubmitted,
-      state: state,
-      billed: billed,
-      notes: notes,
-    });
+    const docSnap = await getDoc(eventsDocs);
+
+    if (docSnap.exists()) {
+      const noteEntryDocRef = doc(database, 'Clients Notes', `${client}`);
+
+      await updateDoc(noteEntryDocRef, {
+        noteEntries: arrayUnion({
+          _id: dateApi,
+          status: status,
+          client: client,
+          counselor: counselor,
+          counselingDate: counselingDateSession,
+          timeNoteSubmitted: timeNoteSubmitted,
+          state: state,
+          billed: billed,
+          notes: notes,
+        }),
+      });
+    } else {
+      // // POST document to Firestore.
+      await setDoc(eventsDocs, {
+        noteEntries: arrayUnion({
+          _id: dateApi,
+          status: status,
+          counselor: counselor,
+          client: client,
+          counselingDate: counselingDateSession,
+          timeNoteSubmitted: timeNoteSubmitted,
+          state: state,
+          billed: billed,
+          notes: notes,
+        }),
+      });
+    }
 
     try {
       res.status(201).json({ counselor, client });
@@ -70,19 +102,20 @@ export default async function userHandler(
       res.status(500).send({ error: 'failed fetch' });
     }
   } else if (req.method === 'PUT') {
-    const eventRef = doc(database, 'Clients', `${req.body}`);
+    const eventRef = doc(database, 'Clients Notes', `${req.body}`);
     await deleteDoc(eventRef);
 
     res.status(201).json({ removedId: req.body });
   } else if (req.method == 'GET') {
-    const eventsCol = createCollection<IProject>('Clients');
+    const eventsCol = createCollection<IEntry>('Clients Notes');
     const getEventsDocs = await getDocs(eventsCol);
 
     // Returns values
-    const eventValues: IProject[] = [];
+    const eventValues: IEntry[] = [];
 
     getEventsDocs.docs.forEach((eventDoc) => {
       const event = eventDoc.data();
+
       eventValues.push(event);
     });
 

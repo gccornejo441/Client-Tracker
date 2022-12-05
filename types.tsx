@@ -26,6 +26,20 @@ export interface IProject {
   notes: string;
 }
 
+export interface IEntry {
+  noteEntries: {
+    _id: number;
+    status: string;
+    counselor: string;
+    client: string;
+    counselingDate: string;
+    timeNoteSubmitted: string;
+    state: string;
+    billed: string;
+    notes: string;
+  };
+}
+
 //https://stackoverflow.com/questions/70157050/how-to-pass-an-array-as-a-prop-and-render-in-child-component-in-typescript-react
 
 export interface IEventProps {

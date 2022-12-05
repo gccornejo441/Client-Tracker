@@ -77,25 +77,28 @@ export const EditorForm = ({ closeModal, editEntry }: ICloseEditor) => {
 
     setSubmittedData(data);
 
+    const clientNameToLowerCase = client.toString().toLocaleLowerCase();
+
     fetch('/api/dataEntryEdits/', {
       body: JSON.stringify({
         _id,
         status,
-        client,
+        client: clientNameToLowerCase,
         counselor,
         counselingDate,
         timeNoteSubmitted,
         state,
         billed,
         notes,
+        editEntry,
       }),
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+    }).then((res) => {
+      if (res.ok) router.reload();
     });
-
-    router.reload();
   };
 
   const handleClick = () => {

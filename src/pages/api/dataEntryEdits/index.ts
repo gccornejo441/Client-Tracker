@@ -1,4 +1,4 @@
-import { doc, updateDoc } from 'firebase/firestore';
+import { arrayRemove, arrayUnion, doc, updateDoc } from 'firebase/firestore';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { database } from '../../../lib/firebaseConfig';
@@ -17,21 +17,28 @@ export default async function userHandler(
     state,
     billed,
     notes,
+    editEntry,
   } = req.body;
 
   if (req.method === 'POST') {
-    const noteEntryDocRef = doc(database, 'Clients', `${req.body._id}`);
+    const noteEntryDocRef = doc(database, 'Clients Notes', `${client}`);
 
     await updateDoc(noteEntryDocRef, {
-      _id: _id,
-      status: status,
-      client: client,
-      counselor: counselor,
-      counselingDate: counselingDate,
-      timeNoteSubmitted: timeNoteSubmitted,
-      state: state,
-      billed: billed,
-      notes: notes,
+      noteEntries: arrayRemove(editEntry),
+    });
+
+    await updateDoc(noteEntryDocRef, {
+      noteEntries: arrayUnion({
+        _id: _id,
+        status: status,
+        client: client,
+        counselor: counselor,
+        counselingDate: counselingDate,
+        timeNoteSubmitted: timeNoteSubmitted,
+        state: state,
+        billed: billed,
+        notes: notes,
+      }),
     });
 
     try {

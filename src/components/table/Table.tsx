@@ -50,8 +50,11 @@ const Table = (props: IEventProps) => {
       case 'awaiting intakes':
         statusClass = 'bg-orange-500 text-white';
         break;
-      case 'closing':
+      case 'closed':
         statusClass = 'bg-black text-white';
+        break;
+      case 'closing':
+        statusClass = 'bg-blue-500 text-white';
         break;
       case 'ongoing':
         statusClass = 'bg-green-500 text-white';
@@ -78,7 +81,7 @@ const Table = (props: IEventProps) => {
 
   const router = useRouter();
 
-  const handleRemove = async (id: number) => {
+  const handleRemove = async (clientName: string) => {
     const response = await fetch('/api/dailyEvents/', {
       method: 'PUT',
       mode: 'cors',
@@ -87,7 +90,7 @@ const Table = (props: IEventProps) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(id),
+      body: JSON.stringify(clientName),
     });
     router.reload();
     return response.json();
@@ -112,6 +115,7 @@ const Table = (props: IEventProps) => {
             closeModal={closeModal}
             editEntry={editEntry}
           />
+          <div></div>
         </div>
         <div className='mt-7 h-[500px] overflow-y-scroll scrollbar-thin scrollbar-track-indigo-300 scrollbar-thumb-indigo-700'>
           <table className='w-full whitespace-nowrap'>
@@ -126,7 +130,7 @@ const Table = (props: IEventProps) => {
                   </td>
                 ))}
               </tr>
-              {props.eventValues.map((event: IProject) => (
+              {props.eventValues?.map((event: IProject) => (
                 <tr
                   key={event._id}
                   tabIndex={0}
@@ -211,7 +215,7 @@ const Table = (props: IEventProps) => {
                               <Menu.Item>
                                 {({ active }) => (
                                   <button
-                                    onClick={() => handleRemove(event._id)}
+                                    onClick={() => handleRemove(event.client)}
                                     className={`${
                                       active
                                         ? 'bg-indigo-500 text-white'
@@ -260,33 +264,6 @@ const Table = (props: IEventProps) => {
                                   </button>
                                 )}
                               </Menu.Item>
-                              <Menu.Item>
-                                {({ active }) => (
-                                  <button
-                                    onClick={() => {
-                                      alert('RELAX, THIS DOES NOTHING!');
-                                    }}
-                                    className={`${
-                                      active
-                                        ? 'bg-indigo-500 text-white'
-                                        : 'text-gray-900'
-                                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                                  >
-                                    {active ? (
-                                      <DropDownIcon.DuplicateActiveIcon
-                                        className='mr-2 h-5 w-5'
-                                        aria-hidden='true'
-                                      />
-                                    ) : (
-                                      <DropDownIcon.DuplicateInactiveIcon
-                                        className='mr-2 h-5 w-5'
-                                        aria-hidden='true'
-                                      />
-                                    )}
-                                    Duplicate
-                                  </button>
-                                )}
-                              </Menu.Item>
                             </div>
                             <div className='px-1 py-1'>
                               <Menu.Item>
@@ -313,33 +290,6 @@ const Table = (props: IEventProps) => {
                                       />
                                     )}
                                     Archive
-                                  </button>
-                                )}
-                              </Menu.Item>
-                              <Menu.Item>
-                                {({ active }) => (
-                                  <button
-                                    onClick={() => {
-                                      alert('RELAX, THIS DOES NOTHING!');
-                                    }}
-                                    className={`${
-                                      active
-                                        ? 'bg-indigo-500 text-white'
-                                        : 'text-gray-900'
-                                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                                  >
-                                    {active ? (
-                                      <DropDownIcon.MoveActiveIcon
-                                        className='mr-2 h-5 w-5'
-                                        aria-hidden='true'
-                                      />
-                                    ) : (
-                                      <DropDownIcon.MoveInactiveIcon
-                                        className='mr-2 h-5 w-5'
-                                        aria-hidden='true'
-                                      />
-                                    )}
-                                    Move
                                   </button>
                                 )}
                               </Menu.Item>

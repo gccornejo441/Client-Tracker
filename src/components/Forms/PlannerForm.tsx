@@ -56,12 +56,14 @@ export const EmailForm = ({ closeModal }: IClose) => {
     const { status, client, counselor, counselingDate, state, billed, notes } =
       data;
 
+    const clientNameToLowerCase = client.toString().toLocaleLowerCase();
+
     setSubmittedData(data);
 
     fetch('/api/dailyEvents/', {
       body: JSON.stringify({
         status,
-        client,
+        client: clientNameToLowerCase,
         counselor,
         counselingDate,
         state,
