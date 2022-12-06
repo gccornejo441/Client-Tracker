@@ -128,9 +128,7 @@ export default async function userHandler(
       const notesArray = event.noteEntries;
 
       for (key in notesArray) {
-        if (notesArray[key]['client'] == client.client) {
-          eventValues.push(notesArray[key]);
-        }
+        eventValues.push(notesArray[key]);
       }
     });
 
