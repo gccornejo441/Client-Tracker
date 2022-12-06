@@ -172,8 +172,8 @@ export const EditorForm = ({ closeModal, editEntry }: ICloseEditor) => {
               {...register('billed')}
               required={true}
               options={[
-                { label: 'Yes', value: 'yes' },
                 { label: 'No', value: 'no' },
+                { label: 'Yes', value: 'yes' },
               ]}
             />
           </div>

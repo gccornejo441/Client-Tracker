@@ -1,6 +1,6 @@
 import { getDocs } from '@firebase/firestore';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { IProject } from 'types';
+import { IEntry, IProject } from 'types';
 
 import { createCollection } from '../../../lib/firebaseConfig';
 
@@ -11,7 +11,7 @@ export default async function userHandler(
   const { query: client, method } = req;
 
   if (method == 'POST') {
-    const eventsCol = createCollection<IProject>('Clients');
+    const eventsCol = createCollection<IProject>('Clients Notes');
     const getClientsDocs = await getDocs(eventsCol);
 
     // Returns values
@@ -24,22 +24,26 @@ export default async function userHandler(
 
     res.status(200).json({ client: client, eventValues: eventValues });
   } else if (method == 'GET') {
-    const eventsCol = createCollection<IProject>('Clients');
-    const getClientsDocs = await getDocs(eventsCol);
+    const eventsCol = createCollection<IEntry>('Clients Notes');
+    const getEventsDocs = await getDocs(eventsCol);
 
     // Returns values
-    const eventValues: IProject[] = [];
+    const eventValues: string[] = [];
 
-    const getClientData = () => {
-      getClientsDocs.docs.forEach((eventDoc) => {
-        const event = eventDoc.data();
-        if (event.client == client.client) {
-          eventValues.push(event);
+    getEventsDocs.docs.forEach((eventDoc) => {
+      const event = eventDoc.data();
+
+      let key: keyof IEntry['noteEntries'];
+
+      const notesArray = event.noteEntries;
+
+      for (key in notesArray) {
+        if (notesArray[key]['client'] == client.client) {
+          eventValues.push(notesArray[key]);
         }
-      });
-      return eventValues;
-    };
+      }
+    });
 
-    res.status(200).json({ eventValues: getClientData() });
+    res.status(200).json(eventValues);
   }
 }

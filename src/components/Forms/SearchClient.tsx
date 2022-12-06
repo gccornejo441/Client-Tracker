@@ -14,10 +14,12 @@ const SearchClient = () => {
   const onSubmit: SubmitHandler<IProject> = async (data) => {
     const { client } = data;
 
-    fetch(`/api/dailyEvents/${client}`, {
+    const clientNameToLowerCase = client.toString().toLocaleLowerCase();
+
+    fetch(`/api/dailyEvents/${clientNameToLowerCase}`, {
       method: 'POST',
       body: JSON.stringify({
-        client,
+        client: clientNameToLowerCase,
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -26,7 +28,7 @@ const SearchClient = () => {
       if (res.ok)
         router.push({
           pathname: '/[id]/',
-          query: { id: client },
+          query: { id: clientNameToLowerCase },
         });
     });
   };

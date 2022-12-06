@@ -76,7 +76,7 @@ export default function HomePage() {
                   </button>
                 </div>
                 <SearchClient />
-                <Table eventValues={data[0]?.noteEntries} />
+                <Table eventValues={data} />
               </div>
             ) : (
               <div>

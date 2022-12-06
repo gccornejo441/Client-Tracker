@@ -81,7 +81,7 @@ const Table = (props: IEventProps) => {
 
   const router = useRouter();
 
-  const handleRemove = async (clientName: string) => {
+  const handleRemove = async (client: IProject) => {
     const response = await fetch('/api/dailyEvents/', {
       method: 'PUT',
       mode: 'cors',
@@ -90,7 +90,7 @@ const Table = (props: IEventProps) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(clientName),
+      body: JSON.stringify(client),
     });
     router.reload();
     return response.json();
@@ -215,7 +215,7 @@ const Table = (props: IEventProps) => {
                               <Menu.Item>
                                 {({ active }) => (
                                   <button
-                                    onClick={() => handleRemove(event.client)}
+                                    onClick={() => handleRemove(event)}
                                     className={`${
                                       active
                                         ? 'bg-indigo-500 text-white'
@@ -270,7 +270,7 @@ const Table = (props: IEventProps) => {
                                 {({ active }) => (
                                   <button
                                     onClick={() => {
-                                      alert('RELAX, THIS DOES NOTHING!');
+                                      alert('NOT YET AVAILABLE');
                                     }}
                                     className={`${
                                       active

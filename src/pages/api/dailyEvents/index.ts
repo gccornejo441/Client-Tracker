@@ -1,7 +1,7 @@
 import { getDocs } from '@firebase/firestore';
 import {
+  arrayRemove,
   arrayUnion,
-  deleteDoc,
   doc,
   getDoc,
   setDoc,
@@ -102,21 +102,36 @@ export default async function userHandler(
       res.status(500).send({ error: 'failed fetch' });
     }
   } else if (req.method === 'PUT') {
-    const eventRef = doc(database, 'Clients Notes', `${req.body}`);
-    await deleteDoc(eventRef);
+    const noteEntryDocRef = doc(
+      database,
+      'Clients Notes',
+      `${req.body.client}`
+    );
 
-    res.status(201).json({ removedId: req.body });
+    await updateDoc(noteEntryDocRef, {
+      noteEntries: arrayRemove(req.body),
+    });
+
+    res.status(201).json({ removedId: `${req.body} has been removed!` });
   } else if (req.method == 'GET') {
     const eventsCol = createCollection<IEntry>('Clients Notes');
     const getEventsDocs = await getDocs(eventsCol);
 
     // Returns values
-    const eventValues: IEntry[] = [];
+    const eventValues: string[] = [];
 
     getEventsDocs.docs.forEach((eventDoc) => {
       const event = eventDoc.data();
 
-      eventValues.push(event);
+      let key: keyof IEntry['noteEntries'];
+
+      const notesArray = event.noteEntries;
+
+      for (key in notesArray) {
+        if (notesArray[key]['client'] == client.client) {
+          eventValues.push(notesArray[key]);
+        }
+      }
     });
 
     res.status(200).json(eventValues);

@@ -28,7 +28,8 @@ export interface IProject {
 
 export interface IEntry {
   noteEntries: {
-    _id: number;
+    [key: string]: string;
+    _id: string;
     status: string;
     counselor: string;
     client: string;
@@ -43,7 +44,7 @@ export interface IEntry {
 //https://stackoverflow.com/questions/70157050/how-to-pass-an-array-as-a-prop-and-render-in-child-component-in-typescript-react
 
 export interface IEventProps {
-  eventValues: IProject[];
+  eventValues?: IProject[];
 }
 
 export interface IClose {
