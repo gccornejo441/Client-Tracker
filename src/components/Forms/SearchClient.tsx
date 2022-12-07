@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { GiCancel } from 'react-icons/Gi';
+import { AiOutlineClose } from 'react-icons/ai';
 import { IProject } from 'types';
 
 const SearchClient = () => {
@@ -52,7 +52,7 @@ const SearchClient = () => {
             {DNE && (
               <div className='relative my-5 rounded border border-red-400 bg-red-100 px-4 py-3 font-semibold text-red-500'>
                 <span className='absolute right-2 top-2'>
-                  <GiCancel
+                  <AiOutlineClose
                     size={16}
                     className='cursor-pointer text-red-500'
                     onClick={() => setDNE(null)}
