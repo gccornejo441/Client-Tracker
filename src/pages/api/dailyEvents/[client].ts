@@ -1,4 +1,5 @@
 import { getDocs } from '@firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { IEntry, IProject } from 'types';
 
@@ -14,15 +15,28 @@ export default async function userHandler(
     const eventsCol = createCollection<IProject>('Clients Notes');
     const getClientsDocs = await getDocs(eventsCol);
 
-    // Returns values
+    // // Get Giftwrap documents from Firestore
+    const eventsDocs = doc(eventsCol, req.body.client);
+
+    const docSnap = await getDoc(eventsDocs);
     const eventValues: IProject[] = [];
 
-    getClientsDocs.docs.forEach((eventDoc) => {
-      const event = eventDoc.data();
-      eventValues.push(event);
-    });
+    try {
+      if (docSnap.exists()) {
+        // Returns values
 
-    res.status(200).json({ client: client, eventValues: eventValues });
+        getClientsDocs.docs.forEach((eventDoc) => {
+          const event = eventDoc.data();
+          eventValues.push(event);
+        });
+      } else {
+        throw 'Not Found.';
+      }
+
+      res.status(200).json({ client: client, eventValues: eventValues });
+    } catch (e) {
+      res.status(400).json(e);
+    }
   } else if (method == 'GET') {
     const eventsCol = createCollection<IEntry>('Clients Notes');
     const getEventsDocs = await getDocs(eventsCol);
