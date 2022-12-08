@@ -5,15 +5,6 @@ import {
   RegisterOptions,
 } from 'react-hook-form';
 
-export interface IEvents {
-  _id: number;
-  eventName: string;
-  eventMemo: string;
-  eventStart: Date;
-  eventEnd: string;
-  eventAction: string;
-}
-
 export interface IProject {
   _id: number;
   status: string;

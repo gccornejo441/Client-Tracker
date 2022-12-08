@@ -16,7 +16,7 @@ import MenuButtonSVG from '~/svg/MenuButtonSVG.svg';
 const TABLELABELS = [
   'Status',
   'Assigned Counselor',
-  'Client',
+  'Client (A - Z)',
   'Date Action Performed',
   'State',
   'Billed',
