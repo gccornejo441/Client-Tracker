@@ -4,6 +4,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { AiOutlineClose } from 'react-icons/ai';
 import { IProject } from 'types';
 
+import clsxm from '@/lib/clsxm';
+
 const SearchClient = () => {
   const { register, handleSubmit } = useForm<IProject>();
   const [DNE, setDNE] = React.useState(null);
@@ -66,6 +68,7 @@ const SearchClient = () => {
               type='text'
               className='focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
               defaultValue={intialValues.client}
+              required
               {...register('client')}
             />
           </div>
@@ -73,7 +76,17 @@ const SearchClient = () => {
             <input
               value='Search'
               type='submit'
-              className='mt-4 w-1/2 cursor-pointer rounded bg-indigo-700 px-6 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 hover:bg-indigo-600 sm:mt-0'
+              className={clsxm(
+                'm-2 cursor-pointer items-center rounded px-10 py-2 font-medium',
+                'focus:outline-none focus-visible:ring focus-visible:ring-primary-500',
+                'shadow-sm',
+                'transition-colors duration-75',
+                'bg-indigo-500 text-white',
+                'border border-indigo-600',
+                'hover:bg-indigo-600 hover:text-white',
+                'active:bg-indigo-500',
+                'disabled:bg-indigo-400 disabled:hover:bg-indigo-400'
+              )}
             />
           </div>
         </form>

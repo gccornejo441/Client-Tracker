@@ -1,9 +1,11 @@
 import { onAuthStateChanged, signOut } from 'firebase/auth';
+import Link from 'next/link';
 import * as React from 'react';
 import useSWR from 'swr';
 
 import { auth } from '@/lib/firebaseConfig';
 
+import Button from '@/components/buttons/Button';
 import LoginForm from '@/components/Forms/LoginForm';
 import SearchClient from '@/components/Forms/SearchClient';
 import Layout from '@/components/layout/Layout';
@@ -47,7 +49,7 @@ export default function HomePage() {
   }, []);
 
   if (error) return <div>failed to load</div>;
-  if (!data)
+  if (!data && !loading)
     return (
       <div className='center'>
         <div className='spinner'></div>
@@ -66,14 +68,13 @@ export default function HomePage() {
           <div className='flex min-h-screen flex-col justify-center text-center'>
             {loading ? (
               <div>
-                <div>
-                  <button
-                    onClick={() => signOut(auth)}
-                    className='focus:shadow-outline m-4 flex cursor-pointer justify-center rounded-full bg-indigo-500 p-2
-              font-semibold tracking-wide text-gray-100 shadow-lg transition duration-300 ease-in focus:outline-none hover:bg-indigo-600'
-                  >
+                <div className='flex w-fit flex-col'>
+                  <Button onClick={() => signOut(auth)} variant='primary'>
                     Sign Out
-                  </button>
+                  </Button>
+                  <Link href='/forms'>
+                    <Button variant='danger'>Client Forms</Button>
+                  </Link>
                 </div>
                 <SearchClient />
                 <Table eventValues={data} />

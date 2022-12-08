@@ -9,6 +9,7 @@ enum ButtonVariant {
   'ghost',
   'light',
   'dark',
+  'danger',
 }
 
 type ButtonProps = {
@@ -38,18 +39,18 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         type='button'
         disabled={disabled}
         className={clsxm(
-          'inline-flex items-center rounded px-4 py-2 font-medium',
+          'm-2 items-center rounded px-4 py-2 font-medium',
           'focus:outline-none focus-visible:ring focus-visible:ring-primary-500',
           'shadow-sm',
           'transition-colors duration-75',
           //#region  //*=========== Variants ===========
           [
             variant === 'primary' && [
-              'bg-primary-500 text-white',
-              'border border-primary-600',
-              'hover:bg-primary-600 hover:text-white',
-              'active:bg-primary-500',
-              'disabled:bg-primary-400 disabled:hover:bg-primary-400',
+              'bg-indigo-500 text-white',
+              'border border-indigo-600',
+              'hover:bg-indigo-600 hover:text-white',
+              'active:bg-indigo-500',
+              'disabled:bg-indigo-400 disabled:hover:bg-indigo-400',
             ],
             variant === 'outline' && [
               'text-primary-500',
@@ -75,6 +76,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
               'bg-gray-900 text-white',
               'border border-gray-600',
               'disabled:bg-gray-700 hover:bg-gray-800 active:bg-gray-700',
+            ],
+            variant === 'danger' && [
+              'bg-red-500 text-white',
+              'border border-red-600',
+              'disabled:bg-red-700 hover:bg-red-700 active:bg-red-700',
             ],
           ],
           //#endregion  //*======== Variants ===========

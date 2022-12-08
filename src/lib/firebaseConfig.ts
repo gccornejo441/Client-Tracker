@@ -7,6 +7,8 @@ import {
   DocumentData,
   getFirestore,
 } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
+
 export const provider = new GoogleAuthProvider();
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -29,6 +31,9 @@ export const database = getFirestore(app);
 
 // Initialize Firebase Authentication and get a reference to the service
 export const auth = getAuth(app);
+
+// Initialize Cloud Storage and get a reference to the service
+export const storage = getStorage(app);
 
 export const createCollection = <T = DocumentData>(collectionName: string) => {
   return collection(database, collectionName) as CollectionReference<T>;

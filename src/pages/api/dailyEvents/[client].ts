@@ -12,16 +12,16 @@ export default async function userHandler(
   const { query: client, method } = req;
 
   if (method == 'POST') {
-    const eventsCol = createCollection<IProject>('Clients Notes');
-    const getClientsDocs = await getDocs(eventsCol);
-
-    // // Get Giftwrap documents from Firestore
-    const eventsDocs = doc(eventsCol, req.body.client);
-
-    const docSnap = await getDoc(eventsDocs);
-    const eventValues: IProject[] = [];
-
     try {
+      const eventsCol = createCollection<IProject>('Clients Notes');
+      const getClientsDocs = await getDocs(eventsCol);
+
+      // // Get Giftwrap documents from Firestore
+      const eventsDocs = doc(eventsCol, req.body.client);
+
+      const docSnap = await getDoc(eventsDocs);
+      const eventValues: IProject[] = [];
+
       if (docSnap.exists()) {
         // Returns values
 
