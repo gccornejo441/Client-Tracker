@@ -1,10 +1,12 @@
 import { signOut } from 'firebase/auth';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import useSWR from 'swr';
 
 import { auth } from '@/lib/firebaseConfig';
 
+import Button from '@/components/buttons/Button';
 import SearchClient from '@/components/Forms/SearchClient';
 import Layout from '@/components/layout/Layout';
 import UnderlineLink from '@/components/links/UnderlineLink';
@@ -33,20 +35,14 @@ function ClientCommingIn() {
           <div className='flex min-h-screen flex-col justify-center text-center'>
             <div>
               <div>
-                <button
-                  onClick={() => signOut(auth)}
-                  className='focus:shadow-outline m-4 flex cursor-pointer justify-center rounded-full bg-indigo-500 p-2
-              font-semibold tracking-wide text-gray-100 shadow-lg transition duration-300 ease-in focus:outline-none hover:bg-indigo-600'
-                >
-                  Sign Out
-                </button>
-                <button
-                  onClick={() => router.back()}
-                  className='focus:shadow-outline m-4 flex cursor-pointer justify-center rounded-full bg-red-500 px-6 py-2
-              font-semibold tracking-wide text-gray-100 shadow-lg transition duration-300 ease-in focus:outline-none hover:bg-red-600'
-                >
-                  Back
-                </button>
+                <div className='flex w-fit flex-col'>
+                  <Button onClick={() => signOut(auth)} variant='primary'>
+                    Sign Out
+                  </Button>
+                  <Link href='/'>
+                    <Button variant='danger'>Back</Button>
+                  </Link>
+                </div>
               </div>
               <SearchClient />
               <Table eventValues={data} />

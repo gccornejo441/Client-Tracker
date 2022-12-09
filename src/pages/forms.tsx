@@ -1,9 +1,10 @@
 import clsx from 'clsx';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { getDownloadURL, listAll, ref } from 'firebase/storage';
 import Link from 'next/link';
 import * as React from 'react';
 
-import { auth } from '@/lib/firebaseConfig';
+import { auth, storage } from '@/lib/firebaseConfig';
 
 import Button from '@/components/buttons/Button';
 import Layout from '@/components/layout/Layout';
@@ -11,17 +12,8 @@ import PrimaryLink from '@/components/links/PrimaryLink';
 import UnderlineLink from '@/components/links/UnderlineLink';
 import Seo from '@/components/Seo';
 
-/**
- * SVGR Support
- * Caveat: No React Props Type.
- *
- * You can override the next-env if the type is important to you
- * @see https://stackoverflow.com/questions/68103844/how-to-override-next-js-svg-module-declaration
- */
-
-// !STARTERCONF -> Select !STARTERCONF and CMD + SHIFT + F
-// Before you begin editing, follow all comments with `STARTERCONF`,
-// to customize the default configuration.
+// Create a reference under which you want to list
+const listRef = ref(storage, 'Client Forms');
 
 const CLIENTFORMS = [
   {
@@ -45,6 +37,13 @@ const CLIENTFORMS = [
     href: 'https://firebasestorage.googleapis.com/v0/b/tracking-20xx.appspot.com/o/Client%20Forms%2FHUD_Budget.pdf?alt=media&token=24af7b92-af50-40ab-a891-579ca36a0f65',
   },
 ];
+// const fileUrl = `https://storage.googleapis.com/${object.bucket}/${object.name}`;
+
+// interface IClientFormStorage {
+//   _id: number;
+//   name: string;
+//   href: string;
+// }
 
 export default function Forms() {
   const [loading, setLoading] = React.useState(false);
@@ -71,6 +70,21 @@ export default function Forms() {
         </p>
       </div>
     );
+
+  // Find all the prefixes and items.
+  function firebaseStorage() {
+    listAll(listRef).then((res) => {
+      res.items.forEach((itemRef) => {
+        // setStorageItem({
+        getDownloadURL(itemRef).then((url) => {
+          const img = document.getElementById('myimg');
+          img?.setAttribute('src', url);
+          img?.setAttribute('download', 'document.pdf');
+        });
+        // })
+      });
+    });
+  }
 
   return (
     <Layout>
@@ -103,6 +117,15 @@ export default function Forms() {
                 );
               })}
             </ol>
+            <div className='border-2 border-black'>
+              <a
+                id='myimg'
+                onClick={firebaseStorage}
+                className='cursor-pointer border-2 border-black'
+              >
+                Click to download
+              </a>
+            </div>
             <footer className='my-10 text-gray-700'>
               © {new Date().getFullYear()}{' '}
               <UnderlineLink href='https://www.webworksdreams.com/'>

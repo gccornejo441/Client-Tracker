@@ -1,22 +1,19 @@
 import { Dialog, Transition } from '@headlessui/react';
 import * as React from 'react';
+import { GiNotebook } from 'react-icons/gi';
 import { IPlannerProps } from 'types';
 
+import Button from '@/components/buttons/Button';
 import { EmailForm } from '@/components/Forms/PlannerForm';
 
 export const Planner = ({ isOpen, closeModal, openModal }: IPlannerProps) => {
   return (
     <>
       <div>
-        <button
-          type='button'
-          onClick={openModal}
-          className='mt-4 inline-flex items-start justify-start rounded bg-indigo-700 px-6 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 hover:bg-indigo-600 sm:mt-0'
-        >
-          <p className='text-sm font-medium leading-none text-white'>
-            Add A Client Note
-          </p>
-        </button>
+        <Button onClick={openModal} variant='primary' className='inline-flex'>
+          <GiNotebook size={18} />
+          <span className='ml-3'>Enter A Client Note</span>
+        </Button>
       </div>
 
       <Transition appear show={isOpen} as={React.Fragment}>

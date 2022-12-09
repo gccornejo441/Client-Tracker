@@ -122,7 +122,7 @@ const Table = (props: IEventProps) => {
           <table className='w-full whitespace-nowrap'>
             <tbody>
               {!props ? (
-                <Skeleton className='h-[500px] w-[100%]' />
+                <Skeleton className='h-[500px] w-[100%] cursor-wait' />
               ) : (
                 <>
                   <tr>

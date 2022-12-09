@@ -25,6 +25,15 @@ import Table from '@/components/table/Table';
 // Before you begin editing, follow all comments with `STARTERCONF`,
 // to customize the default configuration.
 
+const Loader = () => {
+  return (
+    <div className='center cursor-wait'>
+      <div className='spinner'></div>
+      <p className='mt-[10%] text-5xl font-bold text-indigo-700'>Loading...</p>
+    </div>
+  );
+};
+
 export default function HomePage() {
   const [loading, setLoading] = React.useState(false);
 
@@ -49,15 +58,7 @@ export default function HomePage() {
   }, []);
 
   if (error) return <div>failed to load</div>;
-  if (!data && !loading)
-    return (
-      <div className='center'>
-        <div className='spinner'></div>
-        <p className='mt-[10%] text-5xl font-bold text-indigo-700'>
-          Loading...
-        </p>
-      </div>
-    );
+  if (!data && !loading) return <Loader />;
 
   return (
     <Layout>

@@ -2,9 +2,10 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { AiOutlineClose } from 'react-icons/ai';
+import { FaSearch } from 'react-icons/fa';
 import { IProject } from 'types';
 
-import clsxm from '@/lib/clsxm';
+import Button from '@/components/buttons/Button';
 
 const SearchClient = () => {
   const { register, handleSubmit } = useForm<IProject>();
@@ -73,21 +74,10 @@ const SearchClient = () => {
             />
           </div>
           <div className='mx-auto my-10 flex justify-center text-center'>
-            <input
-              value='Search'
-              type='submit'
-              className={clsxm(
-                'm-2 cursor-pointer items-center rounded px-10 py-2 font-medium',
-                'focus:outline-none focus-visible:ring focus-visible:ring-primary-500',
-                'shadow-sm',
-                'transition-colors duration-75',
-                'bg-indigo-500 text-white',
-                'border border-indigo-600',
-                'hover:bg-indigo-600 hover:text-white',
-                'active:bg-indigo-500',
-                'disabled:bg-indigo-400 disabled:hover:bg-indigo-400'
-              )}
-            />
+            <Button variant='primary' className='inline-flex' type='submit'>
+              <FaSearch size={18} />
+              <span className='ml-3'>Search</span>
+            </Button>
           </div>
         </form>
       </div>
