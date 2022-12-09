@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { listAll, ref } from 'firebase/storage';
+import { getDownloadURL, listAll, ref } from 'firebase/storage';
 import Link from 'next/link';
 import * as React from 'react';
 
@@ -47,27 +47,21 @@ interface IClientFormStorage {
 
 export default function Forms() {
   const [loading, setLoading] = React.useState(false);
-  const [storedFile, setStoredFile] = React.useState<IClientFormStorage[]>([
-    {
-      _id: 0,
-      name: '',
-      href: '',
-    },
-  ]);
+  const [storedFile, setStoredFile] = React.useState<IClientFormStorage[]>([]);
 
   React.useEffect(() => {
     listAll(listRef).then((res) => {
       res.items.forEach((itemRef) => {
-        const fileUrl = `https://storage.googleapis.com/${itemRef.bucket}/${itemRef.name}`;
-
-        setStoredFile((storedFile) => [
-          ...storedFile,
-          {
-            _id: Math.random(),
-            name: itemRef.name,
-            href: fileUrl,
-          },
-        ]);
+        getDownloadURL(itemRef).then((url) => {
+          setStoredFile((storedFile) => [
+            ...storedFile,
+            {
+              _id: Math.random(),
+              name: itemRef.name,
+              href: url,
+            },
+          ]);
+        });
       });
     });
 
@@ -92,10 +86,6 @@ export default function Forms() {
         </p>
       </div>
     );
-
-  // Find all the prefixes and items.
-
-  // firebaseStorage()
 
   return (
     <Layout>
@@ -127,17 +117,6 @@ export default function Forms() {
                   </li>
                 );
               })}
-
-              {/* <li key={storedFile._id} className='space-y-2'>
-                    <h2 className='text-lg md:text-xl'>{storedFile.name}</h2>
-                    <p className={clsx('!mt-1 text-sm')}>
-                      No style applied, differentiate internal and outside
-                      links, give custom cursor for outside links.
-                    </p>
-                    <div className='space-x-2'>
-                      <PrimaryLink href={storedFile.href}>{storedFile.name}</PrimaryLink>
-                    </div>
-                  </li> */}
             </ol>
             <footer className='my-10 text-gray-700'>
               © {new Date().getFullYear()}{' '}
