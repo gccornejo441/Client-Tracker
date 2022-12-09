@@ -202,7 +202,7 @@ const Table = (props: IEventProps) => {
                             className='relative inline-block text-left'
                           >
                             <div>
-                              <Menu.Button className='rounded bg-gray-100 py-3 px-5 text-sm leading-none text-gray-600 focus:outline-none focus:ring-2 focus:ring-red-300 focus:ring-offset-2 hover:bg-gray-200'>
+                              <Menu.Button className='rounded bg-gray-100 py-3 px-5 text-sm leading-none text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:ring-offset-2 hover:bg-gray-200'>
                                 <MenuButtonSVG />
                               </Menu.Button>
                             </div>
