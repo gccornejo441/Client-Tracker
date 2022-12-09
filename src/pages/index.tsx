@@ -58,7 +58,7 @@ export default function HomePage() {
   }, []);
 
   if (error) return <div>failed to load</div>;
-  if (!data && !loading) return <Loader />;
+  if (!data) return <Loader />;
 
   return (
     <Layout>
