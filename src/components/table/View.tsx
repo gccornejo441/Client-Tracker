@@ -15,6 +15,13 @@ const View = ({ children }: AuxProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 
+  React.useEffect(() => {
+    tippy('#myButton', {
+      content: "View The Client's Notes",
+      theme: 'indigo',
+    });
+  }, []);
+
   function closeModal() {
     setIsOpen(false);
 
@@ -30,10 +37,6 @@ const View = ({ children }: AuxProps) => {
   function onSuccess() {
     setCopied(true);
   }
-  tippy('#myButton', {
-    content: "View The Client's Notes",
-    theme: 'indigo',
-  });
 
   return (
     <>
