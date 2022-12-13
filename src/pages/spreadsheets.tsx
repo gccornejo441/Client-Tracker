@@ -62,11 +62,6 @@ function SpreadSheet() {
                   </Link>
                 </div>
               </div>
-
-              <iframe
-                className='h-[50vh] w-[100vw]'
-                src='https://varep-my.sharepoint.com/personal/varep1_varep_onmicrosoft_com/_layouts/15/Doc.aspx?sourcedoc={6944a10d-f1ea-49ce-8efd-8420c1560ee6}&action=embedview&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=True&wdInConfigurator=True&wdInConfigurator=True&edesNext=true&edrtees6=false&resen=false'
-              ></iframe>
             </div>
 
             <footer className='my-10 text-gray-700'>

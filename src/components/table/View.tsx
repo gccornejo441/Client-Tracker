@@ -7,6 +7,10 @@ interface AuxProps {
   children: React.ReactNode;
 }
 
+import tippy from 'tippy.js';
+
+import 'tippy.js/dist/tippy.css'; // optional for styling
+
 const View = ({ children }: AuxProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -26,11 +30,16 @@ const View = ({ children }: AuxProps) => {
   function onSuccess() {
     setCopied(true);
   }
+  tippy('#myButton', {
+    content: "View The Client's Notes",
+    theme: 'indigo',
+  });
 
   return (
     <>
       <div className='flex items-center justify-center'>
         <button
+          id='myButton'
           type='button'
           onClick={openModal}
           className='rounded bg-gray-100 py-3 px-5 text-sm leading-none text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:ring-offset-2 hover:bg-gray-200'
