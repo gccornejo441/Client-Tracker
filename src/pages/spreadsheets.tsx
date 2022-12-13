@@ -6,24 +6,9 @@ import useSWR from 'swr';
 import { auth } from '@/lib/firebaseConfig';
 
 import Button from '@/components/buttons/Button';
-import LoginForm from '@/components/Forms/LoginForm';
-import SearchClient from '@/components/Forms/SearchClient';
 import Layout from '@/components/layout/Layout';
 import UnderlineLink from '@/components/links/UnderlineLink';
 import Seo from '@/components/Seo';
-import Table from '@/components/table/Table';
-
-/**
- * SVGR Support
- * Caveat: No React Props Type.
- *
- * You can override the next-env if the type is important to you
- * @see https://stackoverflow.com/questions/68103844/how-to-override-next-js-svg-module-declaration
- */
-
-// !STARTERCONF -> Select !STARTERCONF and CMD + SHIFT + F
-// Before you begin editing, follow all comments with `STARTERCONF`,
-// to customize the default configuration.
 
 const Loader = () => {
   return (
@@ -34,7 +19,7 @@ const Loader = () => {
   );
 };
 
-export default function HomePage() {
+function SpreadSheet() {
   const [loading, setLoading] = React.useState(false);
 
   const { data, error } = useSWR(`/api/dailyEvents/`, (apiURL: string) =>
@@ -58,8 +43,7 @@ export default function HomePage() {
   }, []);
 
   if (error) return <div>failed to load</div>;
-  if (!data) return <Loader />;
-
+  if (!data && loading) return <Loader />;
   return (
     <Layout>
       {/* <Seo templateTitle='Home' /> */}
@@ -67,27 +51,24 @@ export default function HomePage() {
       <main>
         <section className='bg-gray-100'>
           <div className='flex min-h-screen flex-col justify-center text-center'>
-            {loading ? (
+            <div>
               <div>
                 <div className='flex w-fit flex-col'>
                   <Button onClick={() => signOut(auth)} variant='primary'>
                     Sign Out
                   </Button>
-                  <Link href='/forms'>
-                    <Button variant='danger'>Client Forms</Button>
-                  </Link>
-                  <Link href='/spreadsheets'>
-                    <Button variant='danger'>HSCP Report</Button>
+                  <Link href='/'>
+                    <Button variant='danger'>Back</Button>
                   </Link>
                 </div>
-                <SearchClient />
-                <Table eventValues={data} />
               </div>
-            ) : (
-              <div>
-                <LoginForm />
-              </div>
-            )}
+
+              <iframe
+                className='h-[50vh] w-[100vw]'
+                src='https://varep-my.sharepoint.com/personal/varep1_varep_onmicrosoft_com/_layouts/15/Doc.aspx?sourcedoc={6944a10d-f1ea-49ce-8efd-8420c1560ee6}&action=embedview&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=True&wdInConfigurator=True&wdInConfigurator=True&edesNext=true&edrtees6=false&resen=false'
+              ></iframe>
+            </div>
+
             <footer className='my-10 text-gray-700'>
               © {new Date().getFullYear()}{' '}
               <UnderlineLink href='https://www.webworksdreams.com/'>
@@ -100,3 +81,5 @@ export default function HomePage() {
     </Layout>
   );
 }
+
+export default SpreadSheet;
