@@ -43,3 +43,39 @@ export function getFromSessionStorage(key: string): string | null {
 export function classNames(...classes: string[]): string {
   return classes.filter(Boolean).join(' ');
 }
+
+export function getTrueColor(statusType: string) {
+  let statusClass = '';
+  switch (statusType) {
+    case 'not counseled':
+      statusClass = 'bg-red-500 text-white';
+      break;
+    case 'counseled':
+      statusClass = 'bg-cyan-500 text-white';
+      break;
+    case 'awaiting intakes':
+      statusClass = 'bg-orange-500 text-white';
+      break;
+    case 'closed':
+      statusClass = 'bg-black text-white';
+      break;
+    case 'closing':
+      statusClass = 'bg-blue-500 text-white';
+      break;
+    case 'ongoing':
+      statusClass = 'bg-green-500 text-white';
+      break;
+  }
+  return statusClass;
+}
+
+export const TABLELABELS = [
+  'Status',
+  'Assigned Counselor',
+  'Client (A - Z)',
+  'Date Action Performed',
+  'State',
+  'Billed',
+  'Notes',
+  'Actions',
+];

@@ -36,6 +36,7 @@ export interface IEntry {
 
 export interface IEventProps {
   eventValues?: IProject[];
+  setEditEntry?: React.Dispatch<React.SetStateAction<IProject>>;
 }
 
 export interface IClose {
@@ -83,4 +84,8 @@ export type UseControllerProps<TFieldValues extends FieldValues = FieldValues> =
 export interface IEmployee {
   email: string;
   password: string;
+}
+
+export interface IPropsTableBody {
+  setEditEntry: React.Dispatch<React.SetStateAction<IProject>>;
 }

@@ -12,6 +12,7 @@ import Layout from '@/components/layout/Layout';
 import UnderlineLink from '@/components/links/UnderlineLink';
 import Seo from '@/components/Seo';
 import Table from '@/components/table/Table';
+import TableAwaiting from '@/components/table/TableAwaiting';
 
 /**
  * SVGR Support
@@ -69,7 +70,7 @@ export default function HomePage() {
           <div className='flex min-h-screen flex-col justify-center text-center'>
             {loading ? (
               <div>
-                <div className='flex w-fit flex-col'>
+                <div className='flex w-fit'>
                   <Button onClick={() => signOut(auth)} variant='primary'>
                     Sign Out
                   </Button>
@@ -81,6 +82,7 @@ export default function HomePage() {
                   </Link>
                 </div>
                 <SearchClient />
+                <TableAwaiting eventValues={data} />
                 <Table eventValues={data} />
               </div>
             ) : (

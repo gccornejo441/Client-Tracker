@@ -16,10 +16,10 @@ import { IEventProps, IProject } from '../../../types';
 
 import MenuButtonSVG from '~/svg/MenuButtonSVG.svg';
 
-const Table = (props: IEventProps) => {
+const TableAwaiting = (props: IEventProps) => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [isEditorOpen, setIsEditorOpen] = React.useState<boolean>(false);
-  const [notAwaiting, setNotAwaiting] = React.useState<IProject[]>();
+  const [awaiting, setAwaiting] = React.useState<IProject[]>();
 
   const [editEntry, setEditEntry] = React.useState({
     _id: 0,
@@ -34,8 +34,8 @@ const Table = (props: IEventProps) => {
   });
 
   React.useEffect(() => {
-    setNotAwaiting(
-      props.eventValues?.filter((e) => e.status !== 'awaiting intakes')
+    setAwaiting(
+      props.eventValues?.filter((e) => e.status == 'awaiting intakes')
     );
   }, [props.eventValues]);
 
@@ -81,7 +81,7 @@ const Table = (props: IEventProps) => {
     <div className='max-w-[100vw]'>
       <div className='bg-white py-4 px-4 md:py-7 md:px-8 xl:px-10'>
         <h2 className='my-5 rounded-lg bg-indigo-100 p-2 text-indigo-500'>
-          Clients
+          Leads
         </h2>
         <div className='flex flex-col items-start'>
           <Planner
@@ -97,9 +97,9 @@ const Table = (props: IEventProps) => {
           <div></div>
         </div>
         <div className='mt-7 h-[500px] overflow-y-scroll scrollbar-thin scrollbar-track-indigo-300 scrollbar-thumb-indigo-700'>
-          <table className='w-full whitespace-nowrap'>
+          <table className='w-full whitespace-nowrap rounded-lg border-[1.2px] border-gray-200'>
             <tbody>
-              {!notAwaiting ? (
+              {!awaiting ? (
                 <Skeleton className='h-[500px] w-[100%] cursor-wait' />
               ) : (
                 <>
@@ -113,7 +113,7 @@ const Table = (props: IEventProps) => {
                       </td>
                     ))}
                   </tr>
-                  {notAwaiting?.map((event: IProject) => (
+                  {awaiting?.map((event: IProject) => (
                     <tr
                       key={event._id}
                       tabIndex={0}
@@ -294,4 +294,4 @@ const Table = (props: IEventProps) => {
   );
 };
 
-export default Table;
+export default TableAwaiting;
