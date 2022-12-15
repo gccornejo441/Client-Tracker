@@ -18,12 +18,15 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@glideapps/glide-data-grid": "^5.2.1",
     "@headlessui/react": "^1.7.3",
     "@lexical/react": "0.6.4",
     "add": "^2.0.6",
     "clsx": "^1.2.1",
     "dateformat": "^5.0.3",
     "firebase": "^9.12.1",
+    "lodash": "^4.17.21",
+    "marked": "^4.2.4",
     "next": "^12.3.1",
     "react": "^18.2.0",
     "react-clipboard.js": "^2.0.16",
@@ -31,6 +34,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.38.0",
     "react-icons": "^4.4.0",
+    "react-responsive-carousel": "^3.2.23",
     "swr": "^1.3.0",
     "tailwind-merge": "^1.6.1",
     "tippy.js": "^6.3.7",

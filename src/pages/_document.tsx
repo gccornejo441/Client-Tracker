@@ -25,6 +25,10 @@ class MyDocument extends Document {
           />
         </Head>
         <body>
+          <div
+            id='portal'
+            style={{ position: 'fixed', left: '0', top: '0', zIndex: '9999' }}
+          />
           <Main />
           <NextScript />
         </body>

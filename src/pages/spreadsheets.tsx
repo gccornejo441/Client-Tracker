@@ -9,6 +9,7 @@ import Button from '@/components/buttons/Button';
 import Layout from '@/components/layout/Layout';
 import UnderlineLink from '@/components/links/UnderlineLink';
 import Seo from '@/components/Seo';
+// import dynamic from 'next/dynamic';
 
 const Loader = () => {
   return (
@@ -18,6 +19,13 @@ const Loader = () => {
     </div>
   );
 };
+
+// const Grid = dynamic(
+//   () => {
+//       return import('../components/grid');
+//   },
+//   { ssr: false }
+// );
 
 function SpreadSheet() {
   const [loading, setLoading] = React.useState(false);
