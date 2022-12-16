@@ -1,4 +1,5 @@
 import { onAuthStateChanged, signOut } from 'firebase/auth';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import * as React from 'react';
 import useSWR from 'swr';
@@ -9,7 +10,6 @@ import Button from '@/components/buttons/Button';
 import Layout from '@/components/layout/Layout';
 import UnderlineLink from '@/components/links/UnderlineLink';
 import Seo from '@/components/Seo';
-// import dynamic from 'next/dynamic';
 
 const Loader = () => {
   return (
@@ -20,12 +20,12 @@ const Loader = () => {
   );
 };
 
-// const Grid = dynamic(
-//   () => {
-//       return import('../components/grid');
-//   },
-//   { ssr: false }
-// );
+const Grid = dynamic(
+  () => {
+    return import('../components/grid');
+  },
+  { ssr: false }
+);
 
 function SpreadSheet() {
   const [loading, setLoading] = React.useState(false);
@@ -70,6 +70,8 @@ function SpreadSheet() {
                   </Link>
                 </div>
               </div>
+
+              <Grid eventValues={data} />
             </div>
 
             <footer className='my-10 text-gray-700'>

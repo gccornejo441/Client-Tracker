@@ -20,6 +20,7 @@
   "dependencies": {
     "@glideapps/glide-data-grid": "^5.2.1",
     "@headlessui/react": "^1.7.3",
+    "@inovua/reactdatagrid-enterprise": "^5.8.0",
     "@lexical/react": "0.6.4",
     "add": "^2.0.6",
     "clsx": "^1.2.1",
