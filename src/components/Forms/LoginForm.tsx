@@ -5,15 +5,34 @@ import { IEmployee } from 'types';
 
 import { auth } from '@/lib/firebaseConfig';
 
-const LoginForm = () => {
+interface UserProps {
+  setUser: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const LoginForm = (props: UserProps) => {
   const methods = useForm<IEmployee>({ mode: 'onTouched' });
   const { register, handleSubmit } = methods;
-  const [failedAuth] = React.useState(false);
+  const [failedAuth, setFailedAuth] = React.useState<string>();
+
+  const { setUser } = props;
 
   const onSubmit: SubmitHandler<IEmployee> = async (data) => {
     const { email, password } = data;
 
-    await signInWithEmailAndPassword(auth, email, password);
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        setUser(user?.email as string);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        if (errorCode === 'auth/wrong-password') {
+          setFailedAuth('Invalid Username or Password!');
+        } else {
+          setFailedAuth('Invalid Username or Password!');
+        }
+      });
   };
 
   return (
@@ -39,6 +58,7 @@ const LoginForm = () => {
           <input
             className=' w-full border-b border-gray-300 py-2 text-base focus:border-indigo-500 focus:outline-none'
             type=''
+            required={true}
             placeholder='mail@gmail.com'
             {...register('email')}
           />
@@ -50,6 +70,7 @@ const LoginForm = () => {
           <input
             className='w-full content-center border-b border-gray-300 py-2 text-base focus:border-indigo-500 focus:outline-none'
             type=''
+            required={true}
             {...register('password')}
             placeholder='Enter your password'
           />

@@ -37,6 +37,7 @@ const Loader = () => {
 
 export default function HomePage() {
   const [loading, setLoading] = React.useState(false);
+  const [user, setUser] = React.useState('User');
 
   const { data, error } = useSWR(`/api/dailyEvents/`, (apiURL: string) =>
     fetch(apiURL, {
@@ -81,13 +82,14 @@ export default function HomePage() {
                     <Button variant='danger'>HSCP Report</Button>
                   </Link>
                 </div>
+                {user && <p>Welcome, {user}!</p>}
                 <SearchClient />
                 <TableAwaiting eventValues={data} />
                 <Table eventValues={data} />
               </div>
             ) : (
               <div>
-                <LoginForm />
+                <LoginForm setUser={setUser} />
               </div>
             )}
             <footer className='my-10 text-gray-700'>
