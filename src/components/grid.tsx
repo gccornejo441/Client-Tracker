@@ -29,6 +29,7 @@ const columns = [
 export default function Grid(props: IEventProps) {
   const [enableColumnFilterContextMenu] = React.useState(true);
   const [data, setData] = React.useState<IProject[]>([]);
+  const [showZebraRows] = React.useState(true);
 
   React.useEffect(() => {
     const getData = async () => {
@@ -50,6 +51,7 @@ export default function Grid(props: IEventProps) {
         pagination
         dataSource={data}
         defaultLimit={10}
+        showZebraRows={showZebraRows}
         enableColumnFilterContextMenu={enableColumnFilterContextMenu}
       />
     </div>
