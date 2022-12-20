@@ -51,6 +51,7 @@ export default function HomePage() {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setLoading(true);
+        setUser(user.email as string);
       } else {
         setLoading(false);
       }

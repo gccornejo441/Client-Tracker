@@ -57,7 +57,7 @@ const LoginForm = (props: UserProps) => {
           </label>
           <input
             className=' w-full border-b border-gray-300 py-2 text-base focus:border-indigo-500 focus:outline-none'
-            type=''
+            type='email'
             required={true}
             placeholder='mail@gmail.com'
             {...register('email')}
@@ -69,7 +69,7 @@ const LoginForm = (props: UserProps) => {
           </label>
           <input
             className='w-full content-center border-b border-gray-300 py-2 text-base focus:border-indigo-500 focus:outline-none'
-            type=''
+            type='password'
             required={true}
             {...register('password')}
             placeholder='Enter your password'
