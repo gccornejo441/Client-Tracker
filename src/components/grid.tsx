@@ -1,10 +1,30 @@
-import ReactDataGrid from '@inovua/reactdatagrid-enterprise';
+import DataGrid from '@inovua/reactdatagrid-enterprise';
 import React from 'react';
 import { IEventProps, IProject } from 'types';
 
 import '@inovua/reactdatagrid-enterprise/index.css';
 
-const gridStyle = { minHeight: 550, marginTop: 10 };
+const renderRowDetails = ({ data }: { data: IEventProps }) => {
+  return (
+    <div style={{ padding: 20 }}>
+      <h3>Row details:</h3>
+      <table>
+        <tbody>
+          {Object.keys(data).map((name) => {
+            return (
+              <tr key={name}>
+                <td>{name}</td>
+                <td>{data[name]}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+const gridStyle = { minHeight: 550, margin: 10 };
 
 const filterValue = [
   { name: 'status', operator: 'startsWith', type: 'string', value: '' },
@@ -12,7 +32,14 @@ const filterValue = [
 ];
 
 const columns = [
-  { name: 'status', defaultFlex: 2, header: 'Status' },
+  {
+    name: 'status',
+    lockedRowCellRender: (value: string) => {
+      return value + '!';
+    },
+    defaultFlex: 2,
+    header: 'Status',
+  },
   { name: 'counselor', defaultFlex: 2, header: 'Counselor' },
   {
     name: 'client',
@@ -26,34 +53,40 @@ const columns = [
   { name: 'notes', defaultFlex: 6, header: 'Notes' },
 ];
 
-export default function Grid(props: IEventProps) {
+const Grid = (props: IEventProps) => {
+  const { eventValues } = props;
+
   const [enableColumnFilterContextMenu] = React.useState(true);
   const [data, setData] = React.useState<IProject[]>([]);
   const [showZebraRows] = React.useState(true);
 
   React.useEffect(() => {
     const getData = async () => {
-      if (props.eventValues) {
-        setData(props.eventValues);
+      if (eventValues) {
+        setData(eventValues);
       }
     };
     getData();
-  }, [props.eventValues]);
+  }, [eventValues]);
 
   return (
-    <div>
-      <ReactDataGrid
-        licenseKey={process.env.NEXT_PUBLIC_ENV_LOCAL_VARIABLE}
-        idProperty='id'
-        style={gridStyle}
-        defaultFilterValue={filterValue}
-        columns={columns}
-        pagination
-        dataSource={data}
-        defaultLimit={10}
-        showZebraRows={showZebraRows}
-        enableColumnFilterContextMenu={enableColumnFilterContextMenu}
-      />
-    </div>
+    <DataGrid
+      licenseKey={process.env.NEXT_PUBLIC_ENV_LOCAL_VARIABLE}
+      defaultFilterValue={filterValue}
+      pagination
+      idProperty='_id'
+      style={gridStyle}
+      columns={columns}
+      columnMinWidth={300}
+      columnMaxWidth={400}
+      rowExpandHeight={250}
+      renderRowDetails={renderRowDetails}
+      columnDefaultWidth={500}
+      showZebraRows={showZebraRows}
+      dataSource={data}
+      enableColumnFilterContextMenu={enableColumnFilterContextMenu}
+    />
   );
-}
+};
+
+export default Grid;
