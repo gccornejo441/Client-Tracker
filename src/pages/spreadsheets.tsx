@@ -70,10 +70,8 @@ function SpreadSheet() {
                   </Link>
                 </div>
               </div>
-
               <Grid eventValues={data} />
             </div>
-
             <footer className='my-10 text-gray-700'>
               © {new Date().getFullYear()}{' '}
               <UnderlineLink href='https://www.webworksdreams.com/'>

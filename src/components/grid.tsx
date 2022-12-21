@@ -7,7 +7,7 @@ import '@inovua/reactdatagrid-enterprise/index.css';
 const renderRowDetails = ({ data }: { data: IEventProps }) => {
   return (
     <div style={{ padding: 20 }}>
-      <h3>Row details:</h3>
+      <h3>Client Details:</h3>
       <table>
         <tbody>
           {Object.keys(data).map((name) => {
@@ -40,7 +40,7 @@ const columns = [
     defaultFlex: 2,
     header: 'Status',
   },
-  { name: 'counselor', defaultFlex: 2, header: 'Counselor' },
+  { name: 'counselor', defaultFlex: 1, header: 'Counselor' },
   {
     name: 'client',
     defaultFlex: 3,

@@ -40,6 +40,9 @@ export default async function userHandler(
 
     const docSnap = await getDoc(eventsDocs);
 
+    // Creates a new timestamp from the given date.
+    // const timestamp = Timestamp.fromDate(new Date());
+
     if (docSnap.exists()) {
       const noteEntryDocRef = doc(database, 'Clients Notes', `${client}`);
 
@@ -49,8 +52,7 @@ export default async function userHandler(
           status: status,
           client: client,
           counselor: counselor,
-          counselingDate: counselingDateSession,
-          timeNoteSubmitted: timeNoteSubmitted,
+          counselingDate: counselingDate,
           state: state,
           billed: billed,
           notes: notes,
