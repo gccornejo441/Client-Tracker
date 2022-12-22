@@ -6,7 +6,7 @@ import {
 } from 'react-hook-form';
 
 export interface IProject {
-  _id: number;
+  _id: string;
   status: string;
   counselor: string;
   client: string;
@@ -18,16 +18,16 @@ export interface IProject {
 }
 
 export interface IEntry {
+  status: string;
+  client: string;
+  billed: string;
   noteEntries: {
     [key: string]: string;
     _id: string;
-    status: string;
     counselor: string;
-    client: string;
     counselingDate: string;
     timeNoteSubmitted: string;
     state: string;
-    billed: string;
     notes: string;
   };
 }
@@ -35,7 +35,7 @@ export interface IEntry {
 //https://stackoverflow.com/questions/70157050/how-to-pass-an-array-as-a-prop-and-render-in-child-component-in-typescript-react
 
 export interface IEventProps {
-  eventValues?: IProject[];
+  eventValues?: IEntry[];
   setEditEntry?: React.Dispatch<React.SetStateAction<IProject>>;
 }
 
@@ -45,7 +45,7 @@ export interface IClose {
 
 export interface ICloseEditor {
   closeModal(): void;
-  editEntry: IProject;
+  editEntry?: IEntry;
 }
 
 export interface IToggleState {
@@ -66,7 +66,7 @@ export interface IPlannerProps {
 export interface IEditorPlannerProps {
   isEditorOpen: boolean;
   closeModal(): void;
-  editEntry: IProject;
+  editEntry?: IEntry;
 }
 
 export type UseControllerProps<TFieldValues extends FieldValues = FieldValues> =

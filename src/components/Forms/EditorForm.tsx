@@ -9,17 +9,17 @@ import { ICloseEditor, IProject } from '../../../types';
 
 export const EditorForm = ({ closeModal, editEntry }: ICloseEditor) => {
   const methods = useForm<IProject>({
-    mode: 'onTouched',
+    mode: 'onBlur',
     defaultValues: {
-      _id: editEntry._id,
-      status: editEntry.status,
-      counselor: editEntry.counselor,
-      counselingDate: editEntry.counselingDate,
-      timeNoteSubmitted: editEntry.timeNoteSubmitted,
-      client: editEntry.client,
-      state: editEntry.state,
-      billed: editEntry.billed,
-      notes: editEntry.notes,
+      _id: editEntry?.noteEntries._id,
+      client: editEntry?.client,
+      status: editEntry?.noteEntries.status,
+      counselor: editEntry?.noteEntries.counselor,
+      counselingDate: editEntry?.noteEntries.counselingDate,
+      timeNoteSubmitted: editEntry?.noteEntries.timeNoteSubmitted,
+      state: editEntry?.noteEntries.state,
+      billed: editEntry?.noteEntries.billed,
+      notes: editEntry?.noteEntries.notes,
     },
   });
   const {

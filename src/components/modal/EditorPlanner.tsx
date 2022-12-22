@@ -44,7 +44,7 @@ export const EditorPlanner = ({
                     <span>You are now editing</span>
                     <span className='text-indigo-500'>
                       {' '}
-                      {editEntry.client.toUpperCase()}
+                      {editEntry?.client}
                     </span>
                     .
                   </Dialog.Title>

@@ -23,22 +23,25 @@ export default async function userHandler(
   if (req.method === 'POST') {
     const noteEntryDocRef = doc(database, 'Clients Notes', `${client}`);
 
+    const noteEntry = {
+      _id: _id,
+      counselor: counselor,
+      counselingDate: counselingDate,
+      timeNoteSubmitted: timeNoteSubmitted,
+      state: state,
+      billed: billed,
+      notes: notes,
+    };
+
     await updateDoc(noteEntryDocRef, {
       noteEntries: arrayRemove(editEntry),
     });
 
     await updateDoc(noteEntryDocRef, {
-      noteEntries: arrayUnion({
-        _id: _id,
-        status: status,
-        client: client,
-        counselor: counselor,
-        counselingDate: counselingDate,
-        timeNoteSubmitted: timeNoteSubmitted,
-        state: state,
-        billed: billed,
-        notes: notes,
-      }),
+      status: status,
+      client: client,
+      billed: billed,
+      noteEntries: arrayUnion(noteEntry),
     });
 
     try {

@@ -1,6 +1,6 @@
 import DataGrid from '@inovua/reactdatagrid-enterprise';
 import React from 'react';
-import { IEventProps, IProject } from 'types';
+import { IEntry, IEventProps } from 'types';
 
 import '@inovua/reactdatagrid-enterprise/index.css';
 
@@ -57,7 +57,7 @@ const Grid = (props: IEventProps) => {
   const { eventValues } = props;
 
   const [enableColumnFilterContextMenu] = React.useState(true);
-  const [data, setData] = React.useState<IProject[]>([]);
+  const [data, setData] = React.useState<IEntry[]>([]);
   const [showZebraRows] = React.useState(true);
 
   React.useEffect(() => {

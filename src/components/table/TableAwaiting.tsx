@@ -12,32 +12,22 @@ import Skeleton from '@/components/Skeleton';
 import * as DropDownIcon from '@/components/table/dropDown';
 
 import View from './View';
-import { IEventProps, IProject } from '../../../types';
+import { IEntry, IEventProps } from '../../../types';
 
 import MenuButtonSVG from '~/svg/MenuButtonSVG.svg';
 
 const TableAwaiting = (props: IEventProps) => {
+  const { eventValues } = props;
+
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [isEditorOpen, setIsEditorOpen] = React.useState<boolean>(false);
-  const [awaiting, setAwaiting] = React.useState<IProject[]>();
+  const [awaiting, setAwaiting] = React.useState<IEntry[]>();
 
-  const [editEntry, setEditEntry] = React.useState({
-    _id: 0,
-    status: '',
-    counselor: '',
-    client: '',
-    counselingDate: '',
-    timeNoteSubmitted: '',
-    state: '',
-    billed: '',
-    notes: '',
-  });
+  const [editEntry, setEditEntry] = React.useState<IEntry>();
 
   React.useEffect(() => {
-    setAwaiting(
-      props.eventValues?.filter((e) => e.status == 'awaiting intakes')
-    );
-  }, [props.eventValues]);
+    setAwaiting(eventValues?.filter((e) => e.status == 'awaiting intakes'));
+  }, [eventValues]);
 
   function closeModal() {
     if (!isEditorOpen) {
@@ -57,7 +47,7 @@ const TableAwaiting = (props: IEventProps) => {
 
   const router = useRouter();
 
-  const handleRemove = async (client: IProject) => {
+  const handleRemove = async (client: IEntry) => {
     const response = await fetch('/api/dailyEvents/', {
       method: 'PUT',
       mode: 'cors',
@@ -72,8 +62,14 @@ const TableAwaiting = (props: IEventProps) => {
     return response.json();
   };
 
-  const handleEdit = async (event: IProject) => {
-    setEditEntry(event);
+  const handleEdit = async (note: IEntry) => {
+    const noteToBeEdited: IEntry = {
+      client: note.client,
+      status: note.status,
+      billed: note.billed,
+      noteEntries: note.noteEntries,
+    };
+    setEditEntry(noteToBeEdited);
     openEditorModal();
   };
 
@@ -113,65 +109,66 @@ const TableAwaiting = (props: IEventProps) => {
                       </td>
                     ))}
                   </tr>
-                  {awaiting?.map((event: IProject) => (
+                  {awaiting?.map((note: IEntry) => (
                     <tr
-                      key={event._id}
+                      key={note.noteEntries._id}
                       tabIndex={0}
                       className='h-16 rounded border border-gray-200 focus:outline-none'
                     >
                       <td
                         className={clsx(
-                          getTrueColor(event.status),
+                          getTrueColor(note.status || note.noteEntries.status),
                           'px-4 text-xs font-medium uppercase leading-none md:text-sm'
                         )}
                       >
                         <div className='flex items-center'>
-                          <p>{event.status}</p>
+                          <p>{note.status || note.noteEntries.status}</p>
                         </div>
-                      </td>
+                      </td>{' '}
                       <td className='px-4 font-medium uppercase leading-none text-gray-700'>
                         <div className='flex items-center'>
                           <p className='ml-2 text-xs leading-none text-gray-600 md:text-sm'>
-                            {event.counselor}
+                            {note.noteEntries.counselor}
                           </p>
                         </div>
                       </td>
                       <td className='px-4 font-medium uppercase leading-none text-gray-700'>
                         <div className='flex items-center'>
                           <p className='ml-2 text-xs leading-none text-gray-600 md:text-sm'>
-                            {event.client}
+                            {note.noteEntries.client || note.client}
                           </p>
                         </div>
                       </td>
                       <td className='px-4 font-medium uppercase leading-none text-gray-700'>
                         <div className='flex items-center'>
                           <p className='ml-2 text-xs leading-none text-gray-600 md:text-sm'>
-                            {event.counselingDate} @ {event.timeNoteSubmitted}
+                            {note.noteEntries.counselingDate} @{' '}
+                            {note.noteEntries.timeNoteSubmitted}
                           </p>
                         </div>
                       </td>
                       <td className='px-4 font-medium uppercase leading-none text-gray-700'>
                         <div className='flex items-center'>
                           <p className='ml-2 text-xs leading-none text-gray-600 md:text-sm'>
-                            {event.state}
+                            {note.noteEntries.state}
                           </p>
                         </div>
                       </td>
                       <td className='px-4 font-medium uppercase leading-none text-gray-700'>
                         <div className='flex items-center'>
-                          {event.billed == 'yes' ? (
+                          {note.billed == 'yes' ? (
                             <p className='rounded bg-green-100 py-3 px-3 text-sm leading-none text-green-700 focus:outline-none'>
-                              {event.billed}
+                              {note.billed}
                             </p>
                           ) : (
                             <p className='rounded bg-red-100 py-3 px-3 text-sm leading-none text-red-700 focus:outline-none'>
-                              {event.billed}
+                              {note.billed || note.noteEntries.billed}
                             </p>
                           )}
                         </div>
                       </td>
                       <td className='px-4 font-medium uppercase leading-none text-gray-700'>
-                        <View>{event.notes}</View>
+                        <View>{note.noteEntries.notes}</View>
                       </td>
                       <td>
                         <div>
@@ -198,7 +195,7 @@ const TableAwaiting = (props: IEventProps) => {
                                   <Menu.Item>
                                     {({ active }) => (
                                       <button
-                                        onClick={() => handleRemove(event)}
+                                        onClick={() => handleRemove(note)}
                                         className={`${
                                           active
                                             ? 'bg-indigo-500 text-white'
@@ -225,7 +222,7 @@ const TableAwaiting = (props: IEventProps) => {
                                   <Menu.Item>
                                     {({ active }) => (
                                       <button
-                                        onClick={() => handleEdit(event)}
+                                        onClick={() => handleEdit(note)}
                                         className={`${
                                           active
                                             ? 'bg-indigo-500 text-white'

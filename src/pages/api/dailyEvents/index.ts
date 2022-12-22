@@ -41,37 +41,32 @@ export default async function userHandler(
     const docSnap = await getDoc(eventsDocs);
 
     // Creates a new timestamp from the given date.
-    // const timestamp = Timestamp.fromDate(new Date());
+
+    const noteEntry = {
+      _id: dateApi,
+      counselor: counselor,
+      counselingDate: counselingDateSession,
+      timeNoteSubmitted: timeNoteSubmitted,
+      state: state,
+      billed: billed,
+      notes: notes,
+    };
 
     if (docSnap.exists()) {
       const noteEntryDocRef = doc(database, 'Clients Notes', `${client}`);
 
       await updateDoc(noteEntryDocRef, {
-        noteEntries: arrayUnion({
-          _id: dateApi,
-          status: status,
-          client: client,
-          counselor: counselor,
-          counselingDate: counselingDate,
-          state: state,
-          billed: billed,
-          notes: notes,
-        }),
+        status: status,
+        billed: billed,
+        noteEntries: arrayUnion(noteEntry),
       });
     } else {
-      // // POST document to Firestore.
+      // POST document to Firestore.
       await setDoc(eventsDocs, {
-        noteEntries: arrayUnion({
-          _id: dateApi,
-          status: status,
-          counselor: counselor,
-          client: client,
-          counselingDate: counselingDateSession,
-          timeNoteSubmitted: timeNoteSubmitted,
-          state: state,
-          billed: billed,
-          notes: notes,
-        }),
+        status: status,
+        client: client,
+        billed: billed,
+        noteEntries: arrayUnion(noteEntry),
       });
     }
 
@@ -81,11 +76,7 @@ export default async function userHandler(
       res.status(500).send({ error: 'failed fetch' });
     }
   } else if (req.method === 'PUT') {
-    const noteEntryDocRef = doc(
-      database,
-      'Clients Notes',
-      `${req.body.client}`
-    );
+    const noteEntryDocRef = doc(database, 'Clients Notes', `${client}`);
 
     await updateDoc(noteEntryDocRef, {
       noteEntries: arrayRemove(req.body),
@@ -97,17 +88,23 @@ export default async function userHandler(
     const getEventsDocs = await getDocs(eventsCol);
 
     // Returns values
-    const eventValues: Array<string> = [];
+    const eventValues: Array<object> = [];
 
     getEventsDocs.docs.forEach((eventDoc) => {
       const event = eventDoc.data();
 
       let key: keyof IEntry['noteEntries'];
 
-      const notesArray = event.noteEntries;
+      const noteEntries = event.noteEntries;
 
-      for (key in notesArray) {
-        eventValues.push(notesArray[key]);
+      for (key in noteEntries) {
+        const note = {
+          client: event.client,
+          status: event.status,
+          billed: event.billed,
+          noteEntries: noteEntries[key],
+        };
+        eventValues.push(note);
       }
     });
 
