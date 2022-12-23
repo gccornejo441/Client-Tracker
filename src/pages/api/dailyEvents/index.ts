@@ -92,7 +92,6 @@ export default async function userHandler(
 
     getEventsDocs.docs.forEach((eventDoc) => {
       const event = eventDoc.data();
-
       let key: keyof IEntry['noteEntries'];
 
       const noteEntries = event.noteEntries;

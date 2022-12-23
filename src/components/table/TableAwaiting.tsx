@@ -117,12 +117,12 @@ const TableAwaiting = (props: IEventProps) => {
                     >
                       <td
                         className={clsx(
-                          getTrueColor(note.status || note.noteEntries.status),
+                          getTrueColor(note.status),
                           'px-4 text-xs font-medium uppercase leading-none md:text-sm'
                         )}
                       >
                         <div className='flex items-center'>
-                          <p>{note.status || note.noteEntries.status}</p>
+                          <p>{note.status}</p>
                         </div>
                       </td>{' '}
                       <td className='px-4 font-medium uppercase leading-none text-gray-700'>
@@ -135,7 +135,7 @@ const TableAwaiting = (props: IEventProps) => {
                       <td className='px-4 font-medium uppercase leading-none text-gray-700'>
                         <div className='flex items-center'>
                           <p className='ml-2 text-xs leading-none text-gray-600 md:text-sm'>
-                            {note.noteEntries.client || note.client}
+                            {note.client}
                           </p>
                         </div>
                       </td>
@@ -158,11 +158,11 @@ const TableAwaiting = (props: IEventProps) => {
                         <div className='flex items-center'>
                           {note.billed == 'yes' ? (
                             <p className='rounded bg-green-100 py-3 px-3 text-sm leading-none text-green-700 focus:outline-none'>
-                              {note.billed}
+                              {note.billed || 'N/A'}
                             </p>
                           ) : (
                             <p className='rounded bg-red-100 py-3 px-3 text-sm leading-none text-red-700 focus:outline-none'>
-                              {note.billed || note.noteEntries.billed}
+                              {note.billed || 'N/A'}
                             </p>
                           )}
                         </div>
