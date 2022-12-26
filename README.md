@@ -7,7 +7,7 @@
 
 ## Features
 
-How about you add more features
+  <p>Uses <a href="https://reactdatagrid.io/">React Data Grid</a></p>
 
 ## Getting Started
 
