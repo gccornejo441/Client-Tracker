@@ -1,12 +1,11 @@
 import { onAuthStateChanged, signOut } from 'firebase/auth';
-import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import * as React from 'react';
-import useSWR from 'swr';
 
 import { auth } from '@/lib/firebaseConfig';
 
 import Button from '@/components/buttons/Button';
+import Grid from '@/components/grid';
 import Layout from '@/components/layout/Layout';
 import UnderlineLink from '@/components/links/UnderlineLink';
 import Seo from '@/components/Seo';
@@ -20,22 +19,8 @@ const Loader = () => {
   );
 };
 
-const Grid = dynamic(
-  () => {
-    return import('../components/grid');
-  },
-  { ssr: false }
-);
-
 function SpreadSheet() {
   const [loading, setLoading] = React.useState(false);
-
-  const { data, error } = useSWR(`/api/dailyEvents/`, (apiURL: string) =>
-    fetch(apiURL, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    }).then((res) => res.json())
-  );
 
   React.useEffect(() => {
     //function that firebase notifies you if a user is set
@@ -50,8 +35,8 @@ function SpreadSheet() {
     return () => unsubscribe();
   }, []);
 
-  if (error) return <div>failed to load</div>;
-  if (!data && loading) return <Loader />;
+  if (!loading) return <Loader />;
+
   return (
     <Layout>
       {/* <Seo templateTitle='Home' /> */}
@@ -70,7 +55,7 @@ function SpreadSheet() {
                   </Link>
                 </div>
               </div>
-              <Grid eventValues={data} />
+              <Grid />
             </div>
             <footer className='my-10 text-gray-700'>
               © {new Date().getFullYear()}{' '}
