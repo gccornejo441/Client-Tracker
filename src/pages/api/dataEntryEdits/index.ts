@@ -25,6 +25,8 @@ export default async function userHandler(
 
     const noteEntry = {
       _id: _id,
+      client: client,
+      status: status,
       counselor: counselor,
       counselingDate: counselingDate,
       timeNoteSubmitted: timeNoteSubmitted,

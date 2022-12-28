@@ -44,6 +44,8 @@ export default async function userHandler(
 
     const noteEntry = {
       _id: dateApi,
+      client: client,
+      status: status,
       counselor: counselor,
       counselingDate: counselingDateSession,
       timeNoteSubmitted: timeNoteSubmitted,
