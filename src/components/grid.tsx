@@ -1,4 +1,6 @@
+import { TypeColumn } from '@inovua/reactdatagrid-community/types';
 import DataGrid from '@inovua/reactdatagrid-enterprise';
+import { TypeEditInfo } from '@inovua/reactdatagrid-enterprise/types';
 import { getDocs } from 'firebase/firestore';
 import React from 'react';
 import { IEntry, IEventProps } from 'types';
@@ -34,7 +36,7 @@ const filterValue = [
   { name: 'client', operator: 'startsWith', type: 'string', value: '' },
 ];
 
-const columns = [
+const columns: TypeColumn[] = [
   {
     name: 'status',
     lockedRowCellRender: (value: string) => {
@@ -42,17 +44,36 @@ const columns = [
     },
     defaultFlex: 1,
     header: 'Status',
+    minWidth: 200,
+    maxWidth: 300,
   },
-  { name: 'counselor', defaultFlex: 1, header: 'Counselor' },
+  {
+    name: 'counselor',
+    defaultFlex: 1,
+    header: 'Counselor',
+    minWidth: 200,
+    maxWidth: 300,
+  },
   {
     name: 'client',
     defaultFlex: 1,
     header: 'Client',
-    enableColumnFilterContextMenu: true,
   },
   { name: 'counselingDate', defaultFlex: 1, header: 'Counseling Date' },
-  { name: 'state', defaultFlex: 1, header: 'State' },
-  { name: 'billed', defaultFlex: 1, header: 'Billed' },
+  {
+    name: 'state',
+    defaultFlex: 1,
+    header: 'State',
+    minWidth: 15,
+    maxWidth: 100,
+  },
+  {
+    name: 'billed',
+    defaultFlex: 1,
+    header: 'Billed',
+    minWidth: 15,
+    maxWidth: 100,
+  },
   { name: 'notes', defaultFlex: 6, header: 'Notes' },
 ];
 
@@ -60,6 +81,17 @@ export default function Grid() {
   const [enableColumnFilterContextMenu] = React.useState(true);
   const [data, setData] = React.useState<string[]>([]);
   const [showZebraRows] = React.useState(true);
+
+  const onEditComplete = React.useCallback(
+    ({ value, columnId, rowIndex }: TypeEditInfo) => {
+      const dataBits = [...data];
+
+      dataBits[rowIndex][columnId] = value;
+
+      setData(data);
+    },
+    [data]
+  );
 
   React.useEffect(() => {
     const getData = async () => {
@@ -101,6 +133,8 @@ export default function Grid() {
         rowExpandHeight={250}
         renderRowDetails={renderRowDetails}
         columnDefaultWidth={500}
+        onEditComplete={onEditComplete}
+        editable={true}
         showZebraRows={showZebraRows}
         dataSource={data}
         enableColumnFilterContextMenu={enableColumnFilterContextMenu}
