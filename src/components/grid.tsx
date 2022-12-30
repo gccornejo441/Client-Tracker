@@ -1,13 +1,19 @@
 import { TypeColumn } from '@inovua/reactdatagrid-community/types';
 import DataGrid from '@inovua/reactdatagrid-enterprise';
 import { TypeEditInfo } from '@inovua/reactdatagrid-enterprise/types';
-import { getDocs } from 'firebase/firestore';
+import {
+  arrayUnion,
+  doc,
+  getDoc,
+  getDocs,
+  updateDoc,
+} from 'firebase/firestore';
 import React from 'react';
 import { IEntry, IEventProps } from 'types';
 
 import '@inovua/reactdatagrid-enterprise/index.css';
 
-import { createCollection } from '@/lib/firebaseConfig';
+import { createCollection, database } from '@/lib/firebaseConfig';
 
 const renderRowDetails = ({ data }: { data: IEventProps }) => {
   return (
@@ -83,12 +89,31 @@ export default function Grid() {
   const [showZebraRows] = React.useState(true);
 
   const onEditComplete = React.useCallback(
-    ({ value, columnId, rowIndex }: TypeEditInfo) => {
+    async ({ value, columnId, rowIndex }: TypeEditInfo) => {
       const dataBits = [...data];
 
       dataBits[rowIndex][columnId] = value;
 
-      setData(data);
+      const status = dataBits[rowIndex]['status'];
+      const client = dataBits[rowIndex]['client'];
+      const billed = dataBits[rowIndex]['billed'];
+
+      const eventsCol = createCollection<IEntry>('Clients Notes');
+      const eventsDocs = doc(eventsCol, client);
+      const docSnap = await getDoc(eventsDocs);
+
+      if (docSnap.exists()) {
+        const noteEntryDocRef = doc(database, 'Clients Notes', `${client}`);
+
+        await updateDoc(noteEntryDocRef, {
+          status: status,
+          billed: billed,
+          client: client,
+          noteEntries: arrayUnion(dataBits[rowIndex]),
+        });
+      }
+
+      setData(dataBits);
     },
     [data]
   );
