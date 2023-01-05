@@ -80,7 +80,7 @@ export default function HomePage() {
                     <Button variant='danger'>Client Forms</Button>
                   </Link>
                   <Link href='/spreadsheets'>
-                    <Button variant='danger'>ALT. Report</Button>
+                    <Button variant='danger'>Static Report</Button>
                   </Link>
                 </div>
                 {user && <p>Welcome, {user}!</p>}
